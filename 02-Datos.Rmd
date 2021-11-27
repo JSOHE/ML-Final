@@ -1,0 +1,37 @@
+# Carga de Datos
+
+---
+
+Este apartado carga los datos y examina los principales estadísticos que se presentaron en la encuesta.
+
+Lo primero que se tuvo que hacer fue modificar la encuesta ya que su unidad básica era el hogar, por ello se tuvieron que trabajar los datos para colocarlos por población objetivo, es decir aquelos jóvenes entre 14 y 21 años que habìna deseratdo de la educación media superior.
+
+Al hacer esto nos encotramos con una base de **12,317** adolescentes que fueron entrevistados (diferentes a las 13,014 viviendas en las que se habia aplicado la encuesta)
+
+```{r}
+# Es importante que se habra con el encoding porque corrige los acentos.
+encuesta <- read_dta('./Data/base_abandono.dta', encoding= "Latin1")
+
+```
+
+Una vez cargada la encuesta, encontramos que no estaba codificada por ello, tomamos todos los datos y construimos los factores, haciendo más manejable la encuesta, cabe señalar que esta parte del trabajo tomó mucho timepo ya que se codificaron las variables a factores.
+
+Como puede ver a continuación algunos de los nombres de las columnas eran de clase *"haven_labelled"* por esta razón se procedió a cambiarlos a factor junto con otras, 114 variables.
+
+```{r}
+head(encuesta,4)
+
+class(encuesta$edad)
+
+```
+
+A continuaciónse correrán los Script de **R** diseñados colocar los nombres de los estads y los municipios.
+```{r}
+source("clave_edo_mun.R")
+```
+
+El siguiente Script cambia todas las variables *havel_labelled* a *factor*.
+```{r}
+source("clave_preg.R")
+```
+

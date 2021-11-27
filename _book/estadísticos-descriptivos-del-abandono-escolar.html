@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Estadísticos descriptivos del Abandono Escolar | Modelo Predictivo de la Deserción en la Educación Media Superior</title>
+  <meta name="description" content="3 Estadísticos descriptivos del Abandono Escolar | Modelo Predictivo de la Deserción en la Educación Media Superior" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Estadísticos descriptivos del Abandono Escolar | Modelo Predictivo de la Deserción en la Educación Media Superior" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Estadísticos descriptivos del Abandono Escolar | Modelo Predictivo de la Deserción en la Educación Media Superior" />
+  
+  
+  
+
+<meta name="author" content="Valeria &amp; Juan Carlos" />
+
+
+<meta name="date" content="2021-11-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="carga-de-datos.html"/>
+
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="carga-de-datos.html"><a href="carga-de-datos.html"><i class="fa fa-check"></i><b>2</b> Carga de Datos</a></li>
+<li class="chapter" data-level="3" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html"><i class="fa fa-check"></i><b>3</b> Estadísticos descriptivos del Abandono Escolar</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html#limpieza-exploración-y-análisis-conceptual"><i class="fa fa-check"></i><b>3.0.1</b> Limpieza, exploración y análisis conceptual</a></li>
+<li class="chapter" data-level="3.0.2" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html#resumen-general"><i class="fa fa-check"></i><b>3.0.2</b> Resumen general</a></li>
+<li class="chapter" data-level="3.0.3" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html#el-género-influye"><i class="fa fa-check"></i><b>3.0.3</b> ¿El género influye?</a></li>
+<li class="chapter" data-level="3.0.4" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html#entendiendo-la-edad"><i class="fa fa-check"></i><b>3.0.4</b> Entendiendo la Edad</a></li>
+<li class="chapter" data-level="3.1" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html#variables-claramente-importantes-hipótesis"><i class="fa fa-check"></i><b>3.1</b> Variables claramente importantes (hipótesis):</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Modelo Predictivo de la Deserción en la Educación Media Superior</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="estadísticos-descriptivos-del-abandono-escolar" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Estadísticos descriptivos del Abandono Escolar</h1>
+<p>Empezaremos este ejercicio dividiendo nuestra encuesta, en dos set de datos uno para el entrenamiento y otro para la prueba, por ese motivo decidimos separa la base usando un muestreo estratificado debido a que las muestra no es balanceada.</p>
+<p>Decidimos guardar <strong>30%</strong> como datos de prueba, siendo 3,696 y usar el restante <strong>8,621</strong> como datos de entrenamiento, usar el 30% de los datos de entrenamiento para hacer validación cruzada, quedando como sigue:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Division</th>
+<th>Total</th>
+<th>%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prueba</td>
+<td>3,696</td>
+<td>30%</td>
+</tr>
+<tr class="even">
+<td>Entrenamiento</td>
+<td>8,621</td>
+<td>70%</td>
+</tr>
+</tbody>
+</table>
+<p>Posteriormente la muestra de entrenamiento se subdivide, para crear espacio para la muestra de validación cruzada.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Division</th>
+<th>Total</th>
+<th>%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Entrenamiento</td>
+<td>6,034</td>
+<td>70%</td>
+</tr>
+<tr class="even">
+<td>Validación Cruzada</td>
+<td>2,587</td>
+<td>30%</td>
+</tr>
+</tbody>
+</table>
+<p>sin embargo subdividiremos estos, toda vez que vamos a guardar algunos de los datos para hacer validación cruzada.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
+<span id="cb8-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-4" aria-hidden="true" tabindex="-1"></a>encuesta_part_inicial <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(encuesta, <span class="at">strata =</span> desertor, <span class="at">prop =</span> <span class="fl">0.70</span>)</span>
+<span id="cb8-5"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-5" aria-hidden="true" tabindex="-1"></a>encuesta_total <span class="ot">&lt;-</span> <span class="fu">training</span>(encuesta_part_inicial)</span>
+<span id="cb8-6"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-6" aria-hidden="true" tabindex="-1"></a>encuesta_part_val <span class="ot">&lt;-</span> <span class="fu">validation_split</span>(encuesta_total, <span class="at">prop =</span> <span class="fl">0.70</span>)</span>
+<span id="cb8-7"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-7" aria-hidden="true" tabindex="-1"></a>encuesta_part_val<span class="sc">$</span>splits</span></code></pre></div>
+<pre><code>## [[1]]
+## &lt;Training/Validation/Total&gt;
+## &lt;6034/2587/8621&gt;</code></pre>
+<div id="limpieza-exploración-y-análisis-conceptual" class="section level3" number="3.0.1">
+<h3><span class="header-section-number">3.0.1</span> Limpieza, exploración y análisis conceptual</h3>
+<p>Primero vamos a establecer que la variable desertor es la que estamos buscando, esta toma dos valores, 1 si el estudiante desertó y 0 si no lo hizo.</p>
+<p>Podemos observar que se cuenta con 32% de desertores y 68% no desertores en la encuesta.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
+<span id="cb10-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb10-2" aria-hidden="true" tabindex="-1"></a>entrena <span class="ot">&lt;-</span> <span class="fu">training</span>(encuesta_part_val<span class="sc">$</span>splits[[<span class="dv">1</span>]])</span>
+<span id="cb10-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(entrena)</span></code></pre></div>
+<pre><code>## [1] 6034</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb12-1" aria-hidden="true" tabindex="-1"></a>entrena<span class="sc">%&gt;%</span> <span class="fu">count</span>(desertor) <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pcn =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n),<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
+##   desertor        n   pcn
+##   &lt;fct&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1 desertor     1993  0.33
+## 2 no_desertor  4041  0.67</code></pre>
+</div>
+<div id="resumen-general" class="section level3" number="3.0.2">
+<h3><span class="header-section-number">3.0.2</span> Resumen general</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb14-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(entrena)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-7">Table 3.1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">entrena</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">6034</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">119</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">factor</td>
+<td align="left">114</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ageb</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">417</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">id</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">4901</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">edo</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">32</td>
+<td align="left">Mex: 796, CDM: 491, Ver: 459, Sin: 368</td>
+</tr>
+<tr class="even">
+<td align="left">sexo</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Ho: 3027, Mu: 3007</td>
+</tr>
+<tr class="odd">
+<td align="left">ins</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 5352, No: 682</td>
+</tr>
+<tr class="even">
+<td align="left">ultimo</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">9</td>
+<td align="left">Pr: 3492, Pr: 826, Ba: 769, Se: 692</td>
+</tr>
+<tr class="odd">
+<td align="left">actual</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">Si: 2108, -1: 1581, De: 1378, Te: 967</td>
+</tr>
+<tr class="even">
+<td align="left">f21</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Ci: 4041, Ti: 1993, Cu: 0</td>
+</tr>
+<tr class="odd">
+<td align="left">p1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Pr: 3825, Ba: 1100, Ot: 775, Ca: 323</td>
+</tr>
+<tr class="even">
+<td align="left">p4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">95</td>
+<td align="left">No: 2745, No: 1007, NS: 578, 80: 256</td>
+</tr>
+<tr class="odd">
+<td align="left">p6</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">9</td>
+<td align="left">Pú: 5468, Pr: 344, In: 147, No: 48</td>
+</tr>
+<tr class="even">
+<td align="left">p7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Ni: 5281, Un: 368, Do: 310, Tr: 63</td>
+</tr>
+<tr class="odd">
+<td align="left">p8</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">-1: 5293, No: 517, Si: 203, NS: 21</td>
+</tr>
+<tr class="even">
+<td align="left">p9_1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5431, Sí: 603</td>
+</tr>
+<tr class="odd">
+<td align="left">p9_2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 4964, Sí: 1070</td>
+</tr>
+<tr class="even">
+<td align="left">p9_3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 4870, Sí: 1164</td>
+</tr>
+<tr class="odd">
+<td align="left">p9_4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 4926, Sí: 1108</td>
+</tr>
+<tr class="even">
+<td align="left">p9_5</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5968, Sí: 66</td>
+</tr>
+<tr class="odd">
+<td align="left">p9_6</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5786, Sí: 248</td>
+</tr>
+<tr class="even">
+<td align="left">p9_7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5864, Sí: 170</td>
+</tr>
+<tr class="odd">
+<td align="left">p9_8</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5998, Sí: 36</td>
+</tr>
+<tr class="even">
+<td align="left">p9_9</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5314, Sí: 720</td>
+</tr>
+<tr class="odd">
+<td align="left">p9_10</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5851, Sí: 183</td>
+</tr>
+<tr class="even">
+<td align="left">p9_11</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5535, Sí: 499</td>
+</tr>
+<tr class="odd">
+<td align="left">p9_12</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5868, Sí: 166</td>
+</tr>
+<tr class="even">
+<td align="left">p9ot</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">59</td>
+<td align="left">-1: 5868, Co: 24, Co: 14, Te: 9</td>
+</tr>
+<tr class="odd">
+<td align="left">p10h</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">0: 5261, 1: 647, NS: 77, 2: 49</td>
+</tr>
+<tr class="even">
+<td align="left">p10m</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">50</td>
+<td align="left">30: 1434, 20: 1003, 15: 816, 10: 531</td>
+</tr>
+<tr class="odd">
+<td align="left">p11_1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">15</td>
+<td align="left">El: 2384, Po: 1127, La: 370, Me: 298</td>
+</tr>
+<tr class="even">
+<td align="left">p11_2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">15</td>
+<td align="left">Po: 784, El: 753, Ti: 699, La: 553</td>
+</tr>
+<tr class="odd">
+<td align="left">p11_3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">15</td>
+<td align="left">0: 740, Po: 551, -1: 542, Ti: 509</td>
+</tr>
+<tr class="even">
+<td align="left">p12_1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5938, Si: 96</td>
+</tr>
+<tr class="odd">
+<td align="left">p12_2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">Si: 5572, No: 366, -1: 96</td>
+</tr>
+<tr class="even">
+<td align="left">p12_3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">Si: 4996, No: 942, -1: 96</td>
+</tr>
+<tr class="odd">
+<td align="left">p12_4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">No: 5766, Si: 172, -1: 96</td>
+</tr>
+<tr class="even">
+<td align="left">p12_5</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">Si: 4762, No: 1176, -1: 96</td>
+</tr>
+<tr class="odd">
+<td align="left">p12_6</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">No: 5130, Si: 808, -1: 96</td>
+</tr>
+<tr class="even">
+<td align="left">p12_7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">No: 5906, -1: 96, Si: 32</td>
+</tr>
+<tr class="odd">
+<td align="left">p12_8</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">No: 5888, -1: 96, Si: 50</td>
+</tr>
+<tr class="even">
+<td align="left">p12_9</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">No: 5881, -1: 96, Si: 57</td>
+</tr>
+<tr class="odd">
+<td align="left">p12_10</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">No: 5885, -1: 96, Si: 53</td>
+</tr>
+<tr class="even">
+<td align="left">p12_5cts</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">16</td>
+<td align="left">2: 1687, 1: 1573, -1: 1272, 3: 865</td>
+</tr>
+<tr class="odd">
+<td align="left">p12_6cts</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">16</td>
+<td align="left">-1: 5226, 1: 352, 2: 256, 3: 67</td>
+</tr>
+<tr class="even">
+<td align="left">p12_7cts</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">8</td>
+<td align="left">-1: 6002, 2: 13, 1: 7, 3: 4</td>
+</tr>
+<tr class="odd">
+<td align="left">p12_8cts</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">-1: 5984, 1: 37, 2: 12, NS: 1</td>
+</tr>
+<tr class="even">
+<td align="left">p12_10ts</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">10</td>
+<td align="left">-1: 5981, 1: 22, 2: 16, 3: 5</td>
+</tr>
+<tr class="odd">
+<td align="left">p13_1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Na: 1672, Al: 1654, Po: 1547, Mu: 1095</td>
+</tr>
+<tr class="even">
+<td align="left">p13_2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Al: 1820, Mu: 1605, Po: 1414, Na: 1162</td>
+</tr>
+<tr class="odd">
+<td align="left">p13_3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Na: 1610, Al: 1568, Po: 1446, Mu: 1288</td>
+</tr>
+<tr class="even">
+<td align="left">p13_4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Mu: 3025, Al: 1251, Na: 842, Po: 690</td>
+</tr>
+<tr class="odd">
+<td align="left">p13_5</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Mu: 4032, Al: 1035, Po: 457, Na: 433</td>
+</tr>
+<tr class="even">
+<td align="left">p13_6</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Mu: 2093, Al: 1888, Po: 1175, Na: 833</td>
+</tr>
+<tr class="odd">
+<td align="left">p13_7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Mu: 2099, Al: 1474, Na: 1115, Po: 1094</td>
+</tr>
+<tr class="even">
+<td align="left">p14</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Si: 3480, T: 2115, Fa: 318, Fa: 79</td>
+</tr>
+<tr class="odd">
+<td align="left">p15</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">47</td>
+<td align="left">8: 1238, 7: 500, 9: 439, 99.: 438</td>
+</tr>
+<tr class="even">
+<td align="left">p16</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Al: 2884, Nu: 2299, Re: 644, Re: 143</td>
+</tr>
+<tr class="odd">
+<td align="left">p17</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">6</td>
+<td align="left">[E: 2264, Mi: 2073, Mi: 965, M: 569</td>
+</tr>
+<tr class="even">
+<td align="left">p18</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">No: 4809, Si: 1188, NS: 37</td>
+</tr>
+<tr class="odd">
+<td align="left">p19</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">33</td>
+<td align="left">-1: 4846, El: 475, El: 295, La: 162</td>
+</tr>
+<tr class="even">
+<td align="left">p23_1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">NO: 3231, SI: 2803</td>
+</tr>
+<tr class="odd">
+<td align="left">p23_2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">NO: 5290, SI: 744</td>
+</tr>
+<tr class="even">
+<td align="left">p23_1cts</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">24</td>
+<td align="left">-1: 3231, 2: 647, 1: 534, 3: 508</td>
+</tr>
+<tr class="odd">
+<td align="left">p23_2cts</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">9</td>
+<td align="left">-1: 5290, 1: 491, 2: 182, 3: 48</td>
+</tr>
+<tr class="even">
+<td align="left">p25_1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 1119, Pr: 917, Se: 204</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2102, Se: 116, Pr: 77</td>
+</tr>
+<tr class="even">
+<td align="left">p25_3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2052, Pr: 164, Se: 94</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 1964, Pr: 165, Se: 135</td>
+</tr>
+<tr class="even">
+<td align="left">p25_5</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2245, Pr: 37, Se: 37</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_6</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 1934, Se: 207, Pr: 109</td>
+</tr>
+<tr class="even">
+<td align="left">p25_7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 1935, Se: 190, Te: 141</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_8</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2120, Se: 110, Te: 81</td>
+</tr>
+<tr class="even">
+<td align="left">p25_9</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2256, Se: 34, Te: 31</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_10</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2211, Se: 56, Te: 50</td>
+</tr>
+<tr class="even">
+<td align="left">p25_11</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2128, Te: 111, Se: 71</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_12</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2258, Te: 42, Se: 27</td>
+</tr>
+<tr class="even">
+<td align="left">p25_13</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2176, Se: 70, Te: 56</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_14</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2086, Pr: 137, Se: 88</td>
+</tr>
+<tr class="even">
+<td align="left">p25_15</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2286, Te: 26, Se: 17</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_16</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2260, Te: 33, Se: 32</td>
+</tr>
+<tr class="even">
+<td align="left">p25_17</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2214, Te: 50, Se: 39</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_18</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2045, Pr: 152, Se: 97</td>
+</tr>
+<tr class="even">
+<td align="left">p25_19</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2261, Te: 46, Pr: 17</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_20</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2258, Te: 46, Se: 27</td>
+</tr>
+<tr class="even">
+<td align="left">p25_21</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2273, Se: 29, Te: 26</td>
+</tr>
+<tr class="odd">
+<td align="left">p25_22</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2270, Te: 44, Se: 19</td>
+</tr>
+<tr class="even">
+<td align="left">p25_23</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">-1: 3694, No: 2261, Pr: 44, Se: 22</td>
+</tr>
+<tr class="odd">
+<td align="left">p27</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">No: 4482, Sí: 1540, NS: 12</td>
+</tr>
+<tr class="even">
+<td align="left">p29</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">6</td>
+<td align="left">-1: 4494, Me: 702, Ap: 349, Du: 269</td>
+</tr>
+<tr class="odd">
+<td align="left">p30</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">68</td>
+<td align="left">-1: 4494, 200: 215, NS: 115, 150: 108</td>
+</tr>
+<tr class="even">
+<td align="left">p39</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">14</td>
+<td align="left">3: 1995, 2: 1894, 4: 854, 1: 473</td>
+</tr>
+<tr class="odd">
+<td align="left">p40_1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 5897, No: 137</td>
+</tr>
+<tr class="even">
+<td align="left">p40_2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 4758, No: 1276</td>
+</tr>
+<tr class="odd">
+<td align="left">p40_3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 5597, No: 437</td>
+</tr>
+<tr class="even">
+<td align="left">p40_4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 5741, No: 293</td>
+</tr>
+<tr class="odd">
+<td align="left">p40_5</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5224, Si: 810</td>
+</tr>
+<tr class="even">
+<td align="left">p40_6</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 4616, No: 1418</td>
+</tr>
+<tr class="odd">
+<td align="left">p40_7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 3668, Si: 2366</td>
+</tr>
+<tr class="even">
+<td align="left">p40_8</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 3354, No: 2680</td>
+</tr>
+<tr class="odd">
+<td align="left">p40_9</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 3263, Si: 2771</td>
+</tr>
+<tr class="even">
+<td align="left">p40_10</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 5443, No: 591</td>
+</tr>
+<tr class="odd">
+<td align="left">p40_11</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 3299, No: 2735</td>
+</tr>
+<tr class="even">
+<td align="left">p40_12</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 3852, Si: 2182</td>
+</tr>
+<tr class="odd">
+<td align="left">p40_13</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Si: 5406, No: 628</td>
+</tr>
+<tr class="even">
+<td align="left">p40_14</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 5157, Si: 877</td>
+</tr>
+<tr class="odd">
+<td align="left">p40_15</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">No: 3592, Si: 2442</td>
+</tr>
+<tr class="even">
+<td align="left">p41a</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">No: 4399, Un: 632, Má: 409, Un: 302</td>
+</tr>
+<tr class="odd">
+<td align="left">p41b</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">No: 3982, Un: 1141, Do: 579, Un: 255</td>
+</tr>
+<tr class="even">
+<td align="left">p41c</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">No: 5859, Un: 106, Do: 25, Má: 25</td>
+</tr>
+<tr class="odd">
+<td align="left">p41d</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">No: 5988, Un: 37, Do: 6, Má: 3</td>
+</tr>
+<tr class="even">
+<td align="left">p41e</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">No: 6013, Un: 19, Do: 1, Un: 1</td>
+</tr>
+<tr class="odd">
+<td align="left">p41f</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">No: 5997, Un: 24, Do: 8, Má: 3</td>
+</tr>
+<tr class="even">
+<td align="left">p41g</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">No: 5988, Un: 35, Do: 6, Má: 5</td>
+</tr>
+<tr class="odd">
+<td align="left">p41h</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">No: 6007, Un: 23, Do: 2, Un: 1</td>
+</tr>
+<tr class="even">
+<td align="left">p41i</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">No: 5995, Un: 29, Do: 6, Má: 3</td>
+</tr>
+<tr class="odd">
+<td align="left">desertor</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">no_: 4041, des: 1993</td>
+</tr>
+<tr class="even">
+<td align="left">n_mun</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">312</td>
+<td align="left">Eca: 180, Mér: 161, Izt: 139, Cul: 132</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">loca</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">24.26</td>
+<td align="right">123.76</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1799</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">edad</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">18.93</td>
+<td align="right">2.92</td>
+<td align="right">14</td>
+<td align="right">17</td>
+<td align="right">19</td>
+<td align="right">21</td>
+<td align="right">25</td>
+<td align="left">▇▇▆▅▅</td>
+</tr>
+<tr class="odd">
+<td align="left">p5</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">24.67</td>
+<td align="right">8.50</td>
+<td align="right">1</td>
+<td align="right">20</td>
+<td align="right">24</td>
+<td align="right">31</td>
+<td align="right">45</td>
+<td align="left">▁▃▇▅▂</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="el-género-influye" class="section level3" number="3.0.3">
+<h3><span class="header-section-number">3.0.3</span> ¿El género influye?</h3>
+<p>En la siguiente tabla puede ver que parecen ser números muy similares, es decir, se observa que mientras el 33% de los hombres desertan, el 31% de las mujeres lo hacen.</p>
+<p>Incluso pensaría que el porcentaje de mujeres que sería superior pero los datos indican lo cotrario, la tasa de deserción de mujeres es ligeramente menor que la de los hombres.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb15-1" aria-hidden="true" tabindex="-1"></a>entrena <span class="sc">%&gt;%</span> <span class="fu">select</span>(sexo, desertor) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sexo, desertor) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pcn =</span> <span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n),<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 4
+## # Groups:   sexo [2]
+##   sexo      desertor        n   pcn
+##   &lt;fct&gt;     &lt;fct&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1 &quot; Hombre&quot; desertor     1046  0.35
+## 2 &quot; Hombre&quot; no_desertor  1981  0.65
+## 3 &quot; Mujer&quot;  desertor      947  0.31
+## 4 &quot; Mujer&quot;  no_desertor  2060  0.69</code></pre>
+</div>
+<div id="entendiendo-la-edad" class="section level3" number="3.0.4">
+<h3><span class="header-section-number">3.0.4</span> Entendiendo la Edad</h3>
+<p>Se puede observar un aumento de la deserción conforme aumenta la edad. Esto es comprenseible, porque conforme pasan los años, las personas tienen menos oportunidades de regresar a continuar con sus estudios.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb17-1" aria-hidden="true" tabindex="-1"></a>entrena <span class="sc">%&gt;%</span> <span class="fu">select</span>(edad, desertor) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(edad, desertor) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pcn =</span> <span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n),<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">factor</span>(edad), pcn, <span class="at">fill =</span> desertor)) <span class="sc">+</span> </span>
+<span id="cb17-5"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>())</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="1440" /></p>
+</div>
+<div id="variables-claramente-importantes-hipótesis" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Variables claramente importantes (hipótesis):</h2>
+<ul>
+<li>lead time (cuánto tiempo de anticipación en la reserva),</li>
+<li>tipo de depósito (que tiene un nivel de “Non-refundable”),</li>
+<li>historial de cancelaciones,</li>
+<li>tipo de hotel</li>
+<li>tipo de cliente</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-1" aria-hidden="true" tabindex="-1"></a>tabla_univariada <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, variable, target){</span>
+<span id="cb18-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">%&gt;%</span> <span class="fu">count</span>({{ variable }}, {{ target }}) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>({{ variable }}) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">round</span>(prop, <span class="dv">3</span>)) }</span>
+<span id="cb18-4"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tabla_univariada</span>(encuesta, p5, desertor)</span></code></pre></div>
+<pre><code>## # A tibble: 86 × 4
+## # Groups:   p5 [43]
+##       p5 desertor        n  prop
+##    &lt;dbl&gt; &lt;fct&gt;       &lt;int&gt; &lt;dbl&gt;
+##  1     1 desertor       39 0.534
+##  2     1 no_desertor    34 0.466
+##  3     2 desertor        4 0.8  
+##  4     2 no_desertor     1 0.2  
+##  5     3 desertor        5 0.455
+##  6     3 no_desertor     6 0.545
+##  7     4 desertor        1 0.5  
+##  8     4 no_desertor     1 0.5  
+##  9     5 desertor        4 0.8  
+## 10     5 no_desertor     1 0.2  
+## # … with 76 more rows</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb20-1" aria-hidden="true" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span> <span class="fu">select</span>(p5) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 12,317 × 1
+##       p5
+##    &lt;dbl&gt;
+##  1    28
+##  2    37
+##  3    17
+##  4    24
+##  5    22
+##  6    19
+##  7    31
+##  8    21
+##  9    45
+## 10    11
+## # … with 12,307 more rows</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(encuesta<span class="sc">$</span>p5)</span></code></pre></div>
+<pre><code>##  [1] 28 37 17 24 22 19 31 21 45 11  9 20 26 29 16 10 33 23 27 32 15 35 44  5 13
+## [26] 14 30 25 34 36 38  1  3 12  6 39 18  8  7  2 40 41  4</code></pre>
+
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>Lineamientos para la elaboración de indicadores educativos<a href="introducción.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="carga-de-datos.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
