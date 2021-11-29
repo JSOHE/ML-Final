@@ -24,7 +24,7 @@
 <meta name="author" content="Valeria &amp; Juan Carlos" />
 
 
-<meta name="date" content="2021-11-26" />
+<meta name="date" content="2021-11-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="carga-de-datos.html"/>
-
+<link rel="next" href="preprocesamiento-e-ingenieria-de-entradas.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -144,6 +144,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.0.4" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html#entendiendo-la-edad"><i class="fa fa-check"></i><b>3.0.4</b> Entendiendo la Edad</a></li>
 <li class="chapter" data-level="3.1" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html#variables-claramente-importantes-hipótesis"><i class="fa fa-check"></i><b>3.1</b> Variables claramente importantes (hipótesis):</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="preprocesamiento-e-ingenieria-de-entradas.html"><a href="preprocesamiento-e-ingenieria-de-entradas.html"><i class="fa fa-check"></i><b>4</b> Preprocesamiento e ingenieria de entradas:</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="preprocesamiento-e-ingenieria-de-entradas.html"><a href="preprocesamiento-e-ingenieria-de-entradas.html#preparar-solución"><i class="fa fa-check"></i><b>4.0.1</b> Preparar solución</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="no-sé-como-hacer-esto.html"><a href="no-sé-como-hacer-esto.html"><i class="fa fa-check"></i><b>5</b> NO sé como hacer esto</a></li>
 </ul>
 
       </nav>
@@ -164,61 +169,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="estadísticos-descriptivos-del-abandono-escolar" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Estadísticos descriptivos del Abandono Escolar</h1>
 <p>Empezaremos este ejercicio dividiendo nuestra encuesta, en dos set de datos uno para el entrenamiento y otro para la prueba, por ese motivo decidimos separa la base usando un muestreo estratificado debido a que las muestra no es balanceada.</p>
-<p>Decidimos guardar <strong>30%</strong> como datos de prueba, siendo 3,696 y usar el restante <strong>8,621</strong> como datos de entrenamiento, usar el 30% de los datos de entrenamiento para hacer validación cruzada, quedando como sigue:</p>
+<p>Decidimos guardar <strong>20%</strong> como datos de prueba, siendo <strong>2,464</strong> y usar el restante <strong>9,853</strong> como datos de entrenamiento, de estos usar el <strong>20%</strong> de los datos de entrenamiento para hacer validación, quedando como sigue:</p>
 <table>
 <thead>
 <tr class="header">
 <th>Division</th>
 <th>Total</th>
-<th>%</th>
+<th>Porcentaje</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Prueba</td>
-<td>3,696</td>
-<td>30%</td>
+<td>2,464</td>
+<td>20%</td>
 </tr>
 <tr class="even">
 <td>Entrenamiento</td>
-<td>8,621</td>
-<td>70%</td>
+<td>9,853</td>
+<td>80%</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>12,317</td>
+<td>100%</td>
 </tr>
 </tbody>
 </table>
-<p>Posteriormente la muestra de entrenamiento se subdivide, para crear espacio para la muestra de validación cruzada.</p>
+<p>Posteriormente la muestra de entrenamiento se subdivide, para crear espacio para la muestra de validación.</p>
 <table>
 <thead>
 <tr class="header">
 <th>Division</th>
 <th>Total</th>
-<th>%</th>
+<th>Porcentaje</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Entrenamiento</td>
-<td>6,034</td>
-<td>70%</td>
+<td>7,882</td>
+<td>80%</td>
 </tr>
 <tr class="even">
-<td>Validación Cruzada</td>
-<td>2,587</td>
-<td>30%</td>
+<td>Validación</td>
+<td>1,971</td>
+<td>20%</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>9,853</td>
+<td>100%</td>
 </tr>
 </tbody>
 </table>
-<p>sin embargo subdividiremos estos, toda vez que vamos a guardar algunos de los datos para hacer validación cruzada.</p>
+<p>&lt;7882/1971/9853&gt;</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
 <span id="cb8-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-4" aria-hidden="true" tabindex="-1"></a>encuesta_part_inicial <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(encuesta, <span class="at">strata =</span> desertor, <span class="at">prop =</span> <span class="fl">0.70</span>)</span>
+<span id="cb8-4"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-4" aria-hidden="true" tabindex="-1"></a>encuesta_part_inicial <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(encuesta, <span class="at">strata =</span> desertor, <span class="at">prop =</span> <span class="fl">0.80</span>)</span>
 <span id="cb8-5"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-5" aria-hidden="true" tabindex="-1"></a>encuesta_total <span class="ot">&lt;-</span> <span class="fu">training</span>(encuesta_part_inicial)</span>
-<span id="cb8-6"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-6" aria-hidden="true" tabindex="-1"></a>encuesta_part_val <span class="ot">&lt;-</span> <span class="fu">validation_split</span>(encuesta_total, <span class="at">prop =</span> <span class="fl">0.70</span>)</span>
+<span id="cb8-6"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-6" aria-hidden="true" tabindex="-1"></a>encuesta_part_val <span class="ot">&lt;-</span> <span class="fu">validation_split</span>(encuesta_total, <span class="at">prop =</span> <span class="fl">0.80</span>)</span>
 <span id="cb8-7"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb8-7" aria-hidden="true" tabindex="-1"></a>encuesta_part_val<span class="sc">$</span>splits</span></code></pre></div>
 <pre><code>## [[1]]
 ## &lt;Training/Validation/Total&gt;
-## &lt;6034/2587/8621&gt;</code></pre>
+## &lt;7882/1971/9853&gt;</code></pre>
 <div id="limpieza-exploración-y-análisis-conceptual" class="section level3" number="3.0.1">
 <h3><span class="header-section-number">3.0.1</span> Limpieza, exploración y análisis conceptual</h3>
 <p>Primero vamos a establecer que la variable desertor es la que estamos buscando, esta toma dos valores, 1 si el estudiante desertó y 0 si no lo hizo.</p>
@@ -226,14 +241,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
 <span id="cb10-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb10-2" aria-hidden="true" tabindex="-1"></a>entrena <span class="ot">&lt;-</span> <span class="fu">training</span>(encuesta_part_val<span class="sc">$</span>splits[[<span class="dv">1</span>]])</span>
 <span id="cb10-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(entrena)</span></code></pre></div>
-<pre><code>## [1] 6034</code></pre>
+<pre><code>## [1] 7882</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb12-1" aria-hidden="true" tabindex="-1"></a>entrena<span class="sc">%&gt;%</span> <span class="fu">count</span>(desertor) <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pcn =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n),<span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   desertor        n   pcn
 ##   &lt;fct&gt;       &lt;int&gt; &lt;dbl&gt;
-## 1 desertor     1993  0.33
-## 2 no_desertor  4041  0.67</code></pre>
+## 1 desertor     2534  0.32
+## 2 no_desertor  5348  0.68</code></pre>
 </div>
 <div id="resumen-general" class="section level3" number="3.0.2">
 <h3><span class="header-section-number">3.0.2</span> Resumen general</h3>
@@ -249,11 +264,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td align="left">Number of rows</td>
-<td align="left">6034</td>
+<td align="left">7882</td>
 </tr>
 <tr class="odd">
 <td align="left">Number of columns</td>
-<td align="left">119</td>
+<td align="left">87</td>
 </tr>
 <tr class="even">
 <td align="left">_______________________</td>
@@ -264,61 +279,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">character</td>
-<td align="left">2</td>
+<td align="left">factor</td>
+<td align="left">83</td>
 </tr>
 <tr class="odd">
-<td align="left">factor</td>
-<td align="left">114</td>
+<td align="left">numeric</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
-<td align="left">numeric</td>
-<td align="left">3</td>
-</tr>
-<tr class="odd">
 <td align="left">________________________</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Group variables</td>
 <td align="left">None</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: character</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="right">min</th>
-<th align="right">max</th>
-<th align="right">empty</th>
-<th align="right">n_unique</th>
-<th align="right">whitespace</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">ageb</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="right">0</td>
-<td align="right">417</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">id</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">16</td>
-<td align="right">16</td>
-<td align="right">0</td>
-<td align="right">4901</td>
-<td align="right">0</td>
 </tr>
 </tbody>
 </table>
@@ -336,12 +310,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">desertor</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">no_: 5348, des: 2534</td>
+</tr>
+<tr class="even">
 <td align="left">edo</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">32</td>
-<td align="left">Mex: 796, CDM: 491, Ver: 459, Sin: 368</td>
+<td align="left">Mex: 1034, CDM: 631, Ver: 609, Sin: 485</td>
+</tr>
+<tr class="odd">
+<td align="left">muni</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">312</td>
+<td align="left">Eca: 227, Mér: 224, Cul: 178, Izt: 167</td>
 </tr>
 <tr class="even">
 <td align="left">sexo</td>
@@ -349,55 +339,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Ho: 3027, Mu: 3007</td>
-</tr>
-<tr class="odd">
-<td align="left">ins</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">2</td>
-<td align="left">Si: 5352, No: 682</td>
-</tr>
-<tr class="even">
-<td align="left">ultimo</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">9</td>
-<td align="left">Pr: 3492, Pr: 826, Ba: 769, Se: 692</td>
-</tr>
-<tr class="odd">
-<td align="left">actual</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">4</td>
-<td align="left">Si: 2108, -1: 1581, De: 1378, Te: 967</td>
-</tr>
-<tr class="even">
-<td align="left">f21</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">2</td>
-<td align="left">Ci: 4041, Ti: 1993, Cu: 0</td>
-</tr>
-<tr class="odd">
-<td align="left">p1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">5</td>
-<td align="left">Pr: 3825, Ba: 1100, Ot: 775, Ca: 323</td>
-</tr>
-<tr class="even">
-<td align="left">p4</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">95</td>
-<td align="left">No: 2745, No: 1007, NS: 578, 80: 256</td>
+<td align="left">Mu: 3945, Ho: 3937</td>
 </tr>
 <tr class="odd">
 <td align="left">p6</td>
@@ -405,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">9</td>
-<td align="left">Pú: 5468, Pr: 344, In: 147, No: 48</td>
+<td align="left">Pú: 7119, Pr: 478, In: 196, No: 50</td>
 </tr>
 <tr class="even">
 <td align="left">p7</td>
@@ -413,351 +355,191 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">Ni: 5281, Un: 368, Do: 310, Tr: 63</td>
+<td align="left">Ni: 6900, Un: 476, Do: 424, Tr: 66</td>
 </tr>
 <tr class="odd">
-<td align="left">p8</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">4</td>
-<td align="left">-1: 5293, No: 517, Si: 203, NS: 21</td>
-</tr>
-<tr class="even">
 <td align="left">p9_1</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5431, Sí: 603</td>
+<td align="left">No: 7076, Sí: 806</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p9_2</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 4964, Sí: 1070</td>
+<td align="left">No: 6510, Sí: 1372</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p9_3</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 4870, Sí: 1164</td>
+<td align="left">No: 6372, Sí: 1510</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p9_4</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 4926, Sí: 1108</td>
+<td align="left">No: 6486, Sí: 1396</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p9_5</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5968, Sí: 66</td>
+<td align="left">No: 7791, Sí: 91</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p9_6</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5786, Sí: 248</td>
+<td align="left">No: 7559, Sí: 323</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p9_7</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5864, Sí: 170</td>
+<td align="left">No: 7650, Sí: 232</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p9_8</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5998, Sí: 36</td>
+<td align="left">No: 7835, Sí: 47</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p9_9</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5314, Sí: 720</td>
+<td align="left">No: 6942, Sí: 940</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p9_10</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5851, Sí: 183</td>
+<td align="left">No: 7619, Sí: 263</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p9_11</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5535, Sí: 499</td>
+<td align="left">No: 7247, Sí: 635</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p9_12</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5868, Sí: 166</td>
-</tr>
-<tr class="even">
-<td align="left">p9ot</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">59</td>
-<td align="left">-1: 5868, Co: 24, Co: 14, Te: 9</td>
+<td align="left">No: 7650, Sí: 232</td>
 </tr>
 <tr class="odd">
-<td align="left">p10h</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">4</td>
-<td align="left">0: 5261, 1: 647, NS: 77, 2: 49</td>
-</tr>
-<tr class="even">
-<td align="left">p10m</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">50</td>
-<td align="left">30: 1434, 20: 1003, 15: 816, 10: 531</td>
-</tr>
-<tr class="odd">
-<td align="left">p11_1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">15</td>
-<td align="left">El: 2384, Po: 1127, La: 370, Me: 298</td>
-</tr>
-<tr class="even">
-<td align="left">p11_2</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">15</td>
-<td align="left">Po: 784, El: 753, Ti: 699, La: 553</td>
-</tr>
-<tr class="odd">
-<td align="left">p11_3</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">15</td>
-<td align="left">0: 740, Po: 551, -1: 542, Ti: 509</td>
-</tr>
-<tr class="even">
 <td align="left">p12_1</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5938, Si: 96</td>
+<td align="left">No: 7759, Si: 123</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p12_2</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">Si: 5572, No: 366, -1: 96</td>
+<td align="left">Si: 7260, No: 499, -1: 123</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p12_3</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">Si: 4996, No: 942, -1: 96</td>
+<td align="left">Si: 6540, No: 1219, -1: 123</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p12_4</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">No: 5766, Si: 172, -1: 96</td>
+<td align="left">No: 7512, Si: 247, -1: 123</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p12_5</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">Si: 4762, No: 1176, -1: 96</td>
+<td align="left">Si: 6181, No: 1578, -1: 123</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p12_6</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">No: 5130, Si: 808, -1: 96</td>
+<td align="left">No: 6703, Si: 1056, -1: 123</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p12_7</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">No: 5906, -1: 96, Si: 32</td>
+<td align="left">No: 7708, -1: 123, Si: 51</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p12_8</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">No: 5888, -1: 96, Si: 50</td>
+<td align="left">No: 7679, -1: 123, Si: 80</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p12_9</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">No: 5881, -1: 96, Si: 57</td>
+<td align="left">No: 7674, -1: 123, Si: 85</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p12_10</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">No: 5885, -1: 96, Si: 53</td>
-</tr>
-<tr class="even">
-<td align="left">p12_5cts</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">16</td>
-<td align="left">2: 1687, 1: 1573, -1: 1272, 3: 865</td>
+<td align="left">No: 7698, -1: 123, Si: 61</td>
 </tr>
 <tr class="odd">
-<td align="left">p12_6cts</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">16</td>
-<td align="left">-1: 5226, 1: 352, 2: 256, 3: 67</td>
-</tr>
-<tr class="even">
-<td align="left">p12_7cts</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">8</td>
-<td align="left">-1: 6002, 2: 13, 1: 7, 3: 4</td>
-</tr>
-<tr class="odd">
-<td align="left">p12_8cts</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">4</td>
-<td align="left">-1: 5984, 1: 37, 2: 12, NS: 1</td>
-</tr>
-<tr class="even">
-<td align="left">p12_10ts</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">10</td>
-<td align="left">-1: 5981, 1: 22, 2: 16, 3: 5</td>
-</tr>
-<tr class="odd">
-<td align="left">p13_1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">5</td>
-<td align="left">Na: 1672, Al: 1654, Po: 1547, Mu: 1095</td>
-</tr>
-<tr class="even">
-<td align="left">p13_2</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">5</td>
-<td align="left">Al: 1820, Mu: 1605, Po: 1414, Na: 1162</td>
-</tr>
-<tr class="odd">
-<td align="left">p13_3</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">5</td>
-<td align="left">Na: 1610, Al: 1568, Po: 1446, Mu: 1288</td>
-</tr>
-<tr class="even">
-<td align="left">p13_4</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">5</td>
-<td align="left">Mu: 3025, Al: 1251, Na: 842, Po: 690</td>
-</tr>
-<tr class="odd">
-<td align="left">p13_5</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">5</td>
-<td align="left">Mu: 4032, Al: 1035, Po: 457, Na: 433</td>
-</tr>
-<tr class="even">
-<td align="left">p13_6</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">5</td>
-<td align="left">Mu: 2093, Al: 1888, Po: 1175, Na: 833</td>
-</tr>
-<tr class="odd">
-<td align="left">p13_7</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">5</td>
-<td align="left">Mu: 2099, Al: 1474, Na: 1115, Po: 1094</td>
-</tr>
-<tr class="even">
 <td align="left">p14</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">Si: 3480, T: 2115, Fa: 318, Fa: 79</td>
-</tr>
-<tr class="odd">
-<td align="left">p15</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">47</td>
-<td align="left">8: 1238, 7: 500, 9: 439, 99.: 438</td>
+<td align="left">Si: 4566, T: 2735, Fa: 429, Fa: 94</td>
 </tr>
 <tr class="even">
 <td align="left">p16</td>
@@ -765,7 +547,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">Al: 2884, Nu: 2299, Re: 644, Re: 143</td>
+<td align="left">Al: 3779, Nu: 3015, Re: 841, Re: 178</td>
 </tr>
 <tr class="odd">
 <td align="left">p17</td>
@@ -773,7 +555,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">6</td>
-<td align="left">[E: 2264, Mi: 2073, Mi: 965, M: 569</td>
+<td align="left">[E: 3019, Mi: 2720, Mi: 1213, M: 744</td>
 </tr>
 <tr class="even">
 <td align="left">p18</td>
@@ -781,471 +563,415 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">No: 4809, Si: 1188, NS: 37</td>
+<td align="left">No: 6328, Si: 1513, NS: 41</td>
 </tr>
 <tr class="odd">
-<td align="left">p19</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">33</td>
-<td align="left">-1: 4846, El: 475, El: 295, La: 162</td>
-</tr>
-<tr class="even">
 <td align="left">p23_1</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">NO: 3231, SI: 2803</td>
+<td align="left">NO: 4172, SI: 3710</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p23_2</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">NO: 5290, SI: 744</td>
-</tr>
-<tr class="even">
-<td align="left">p23_1cts</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">24</td>
-<td align="left">-1: 3231, 2: 647, 1: 534, 3: 508</td>
+<td align="left">NO: 6930, SI: 952</td>
 </tr>
 <tr class="odd">
-<td align="left">p23_2cts</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">9</td>
-<td align="left">-1: 5290, 1: 491, 2: 182, 3: 48</td>
-</tr>
-<tr class="even">
 <td align="left">p25_1</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 1119, Pr: 917, Se: 204</td>
+<td align="left">-1: 4882, No: 1441, Pr: 1181, Se: 253</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_2</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2102, Se: 116, Pr: 77</td>
+<td align="left">-1: 4882, No: 2693, Se: 154, Pr: 90</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_3</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2052, Pr: 164, Se: 94</td>
+<td align="left">-1: 4882, No: 2650, Pr: 211, Se: 109</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_4</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 1964, Pr: 165, Se: 135</td>
+<td align="left">-1: 4882, No: 2506, Pr: 211, Se: 177</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_5</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2245, Pr: 37, Se: 37</td>
+<td align="left">-1: 4882, No: 2878, Pr: 50, Se: 47</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_6</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 1934, Se: 207, Pr: 109</td>
+<td align="left">-1: 4882, No: 2469, Se: 266, Pr: 145</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_7</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 1935, Se: 190, Te: 141</td>
+<td align="left">-1: 4882, No: 2477, Se: 252, Te: 176</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_8</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2120, Se: 110, Te: 81</td>
+<td align="left">-1: 4882, No: 2734, Se: 125, Te: 102</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_9</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2256, Se: 34, Te: 31</td>
+<td align="left">-1: 4882, No: 2888, Se: 48, Te: 34</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_10</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2211, Se: 56, Te: 50</td>
+<td align="left">-1: 4882, No: 2838, Se: 76, Te: 59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_11</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2128, Te: 111, Se: 71</td>
+<td align="left">-1: 4882, No: 2731, Te: 135, Se: 94</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_12</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2258, Te: 42, Se: 27</td>
+<td align="left">-1: 4882, No: 2894, Te: 54, Se: 36</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_13</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2176, Se: 70, Te: 56</td>
+<td align="left">-1: 4882, No: 2766, Se: 101, Te: 76</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_14</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2086, Pr: 137, Se: 88</td>
+<td align="left">-1: 4882, No: 2687, Pr: 156, Se: 121</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_15</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2286, Te: 26, Se: 17</td>
+<td align="left">-1: 4882, No: 2928, Te: 32, Se: 23</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_16</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2260, Te: 33, Se: 32</td>
+<td align="left">-1: 4882, No: 2898, Te: 49, Se: 37</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_17</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2214, Te: 50, Se: 39</td>
+<td align="left">-1: 4882, No: 2840, Te: 63, Pr: 51</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_18</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2045, Pr: 152, Se: 97</td>
+<td align="left">-1: 4882, No: 2638, Pr: 198, Se: 108</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_19</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2261, Te: 46, Pr: 17</td>
+<td align="left">-1: 4882, No: 2889, Te: 65, Se: 27</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_20</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2258, Te: 46, Se: 27</td>
+<td align="left">-1: 4882, No: 2882, Te: 70, Se: 31</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_21</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2273, Se: 29, Te: 26</td>
+<td align="left">-1: 4882, No: 2926, Se: 35, Te: 28</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p25_22</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2270, Te: 44, Se: 19</td>
+<td align="left">-1: 4882, No: 2903, Te: 62, Se: 23</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p25_23</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">-1: 3694, No: 2261, Pr: 44, Se: 22</td>
+<td align="left">-1: 4882, No: 2899, Pr: 59, Se: 27</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p27</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="left">No: 4482, Sí: 1540, NS: 12</td>
-</tr>
-<tr class="even">
-<td align="left">p29</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">6</td>
-<td align="left">-1: 4494, Me: 702, Ap: 349, Du: 269</td>
+<td align="left">No: 5839, Sí: 2025, NS: 18</td>
 </tr>
 <tr class="odd">
-<td align="left">p30</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">68</td>
-<td align="left">-1: 4494, 200: 215, NS: 115, 150: 108</td>
-</tr>
-<tr class="even">
 <td align="left">p39</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">14</td>
-<td align="left">3: 1995, 2: 1894, 4: 854, 1: 473</td>
+<td align="left">3: 2644, 2: 2534, 4: 1105, 1: 594</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p40_1</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 5897, No: 137</td>
+<td align="left">Si: 7717, No: 165</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p40_2</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 4758, No: 1276</td>
+<td align="left">Si: 6217, No: 1665</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p40_3</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 5597, No: 437</td>
+<td align="left">Si: 7331, No: 551</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p40_4</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 5741, No: 293</td>
+<td align="left">Si: 7507, No: 375</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p40_5</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5224, Si: 810</td>
+<td align="left">No: 6839, Si: 1043</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p40_6</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 4616, No: 1418</td>
+<td align="left">Si: 6098, No: 1784</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p40_7</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 3668, Si: 2366</td>
+<td align="left">No: 4788, Si: 3094</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p40_8</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 3354, No: 2680</td>
+<td align="left">Si: 4400, No: 3482</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p40_9</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 3263, Si: 2771</td>
+<td align="left">No: 4199, Si: 3683</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p40_10</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 5443, No: 591</td>
+<td align="left">Si: 7113, No: 769</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p40_11</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 3299, No: 2735</td>
+<td align="left">Si: 4364, No: 3518</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p40_12</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 3852, Si: 2182</td>
+<td align="left">No: 4974, Si: 2908</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p40_13</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">Si: 5406, No: 628</td>
+<td align="left">Si: 7077, No: 805</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p40_14</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 5157, Si: 877</td>
+<td align="left">No: 6717, Si: 1165</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p40_15</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="left">No: 3592, Si: 2442</td>
+<td align="left">No: 4622, Si: 3260</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p41a</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">No: 4399, Un: 632, Má: 409, Un: 302</td>
+<td align="left">No: 5757, Un: 856, Má: 548, Un: 366</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p41b</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">No: 3982, Un: 1141, Do: 579, Un: 255</td>
+<td align="left">No: 5246, Un: 1442, Do: 773, Un: 319</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p41c</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">No: 5859, Un: 106, Do: 25, Má: 25</td>
+<td align="left">No: 7657, Un: 127, Má: 40, Do: 37</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p41d</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
-<td align="right">4</td>
-<td align="left">No: 5988, Un: 37, Do: 6, Má: 3</td>
+<td align="right">5</td>
+<td align="left">No: 7817, Un: 50, Do: 9, Un: 3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p41e</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">4</td>
-<td align="left">No: 6013, Un: 19, Do: 1, Un: 1</td>
+<td align="left">No: 7855, Un: 25, Do: 1, Un: 1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p41f</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">No: 5997, Un: 24, Do: 8, Má: 3</td>
+<td align="left">No: 7832, Un: 37, Do: 6, Má: 4</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p41g</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">4</td>
-<td align="left">No: 5988, Un: 35, Do: 6, Má: 5</td>
+<td align="left">No: 7820, Un: 50, Do: 8, Má: 4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p41h</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">No: 6007, Un: 23, Do: 2, Un: 1</td>
+<td align="left">No: 7844, Un: 34, Do: 2, Un: 1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">p41i</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">FALSE</td>
 <td align="right">5</td>
-<td align="left">No: 5995, Un: 29, Do: 6, Má: 3</td>
-</tr>
-<tr class="odd">
-<td align="left">desertor</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">2</td>
-<td align="left">no_: 4041, des: 1993</td>
-</tr>
-<tr class="even">
-<td align="left">n_mun</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">312</td>
-<td align="left">Eca: 180, Mér: 161, Izt: 139, Cul: 132</td>
+<td align="left">No: 7819, Un: 46, Do: 10, Má: 5</td>
 </tr>
 </tbody>
 </table>
@@ -1268,43 +994,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">loca</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">24.26</td>
-<td align="right">123.76</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1799</td>
-<td align="left">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
 <td align="left">edad</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">18.93</td>
-<td align="right">2.92</td>
+<td align="right">18.89</td>
+<td align="right">2.90</td>
 <td align="right">14</td>
-<td align="right">17</td>
-<td align="right">19</td>
-<td align="right">21</td>
+<td align="right">17.0</td>
+<td align="right">18.0</td>
+<td align="right">21.0</td>
 <td align="right">25</td>
 <td align="left">▇▇▆▅▅</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">p5</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">24.67</td>
-<td align="right">8.50</td>
+<td align="right">8.27</td>
+<td align="right">0.74</td>
+<td align="right">6</td>
+<td align="right">7.9</td>
+<td align="right">8.3</td>
+<td align="right">8.8</td>
+<td align="right">10</td>
+<td align="left">▁▃▇▆▂</td>
+</tr>
+<tr class="odd">
+<td align="left">p10</td>
+<td align="right">0</td>
 <td align="right">1</td>
-<td align="right">20</td>
-<td align="right">24</td>
-<td align="right">31</td>
-<td align="right">45</td>
-<td align="left">▁▃▇▅▂</td>
+<td align="right">29.92</td>
+<td align="right">19.84</td>
+<td align="right">0</td>
+<td align="right">15.0</td>
+<td align="right">30.0</td>
+<td align="right">40.0</td>
+<td align="right">150</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">p15</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">8.14</td>
+<td align="right">0.76</td>
+<td align="right">3</td>
+<td align="right">7.9</td>
+<td align="right">8.1</td>
+<td align="right">8.6</td>
+<td align="right">10</td>
+<td align="left">▁▁▂▇▃</td>
 </tr>
 </tbody>
 </table>
@@ -1320,10 +1059,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # Groups:   sexo [2]
 ##   sexo      desertor        n   pcn
 ##   &lt;fct&gt;     &lt;fct&gt;       &lt;int&gt; &lt;dbl&gt;
-## 1 &quot; Hombre&quot; desertor     1046  0.35
-## 2 &quot; Hombre&quot; no_desertor  1981  0.65
-## 3 &quot; Mujer&quot;  desertor      947  0.31
-## 4 &quot; Mujer&quot;  no_desertor  2060  0.69</code></pre>
+## 1 &quot; Hombre&quot; desertor     1332  0.34
+## 2 &quot; Hombre&quot; no_desertor  2605  0.66
+## 3 &quot; Mujer&quot;  desertor     1202  0.3 
+## 4 &quot; Mujer&quot;  no_desertor  2743  0.7</code></pre>
 </div>
 <div id="entendiendo-la-edad" class="section level3" number="3.0.4">
 <h3><span class="header-section-number">3.0.4</span> Entendiendo la Edad</h3>
@@ -1339,65 +1078,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> Variables claramente importantes (hipótesis):</h2>
 <ul>
 <li>lead time (cuánto tiempo de anticipación en la reserva),</li>
-<li>tipo de depósito (que tiene un nivel de “Non-refundable”),</li>
-<li>historial de cancelaciones,</li>
-<li>tipo de hotel</li>
-<li>tipo de cliente</li>
+<li>Sexo</li>
+<li>Tiempo de la escuela a la casa</li>
+<li>Tener hijos</li>
+<li>Consumo de Drogas</li>
 </ul>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-1" aria-hidden="true" tabindex="-1"></a>tabla_univariada <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, variable, target){</span>
 <span id="cb18-2"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">%&gt;%</span> <span class="fu">count</span>({{ variable }}, {{ target }}) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>({{ variable }}) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">round</span>(prop, <span class="dv">3</span>)) }</span>
+<span id="cb18-3"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">round</span>(prop, <span class="dv">2</span>)) }</span>
 <span id="cb18-4"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-5"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tabla_univariada</span>(encuesta, p5, desertor)</span></code></pre></div>
-<pre><code>## # A tibble: 86 × 4
-## # Groups:   p5 [43]
+<pre><code>## # A tibble: 82 × 4
+## # Groups:   p5 [41]
 ##       p5 desertor        n  prop
 ##    &lt;dbl&gt; &lt;fct&gt;       &lt;int&gt; &lt;dbl&gt;
-##  1     1 desertor       39 0.534
-##  2     1 no_desertor    34 0.466
-##  3     2 desertor        4 0.8  
-##  4     2 no_desertor     1 0.2  
-##  5     3 desertor        5 0.455
-##  6     3 no_desertor     6 0.545
-##  7     4 desertor        1 0.5  
-##  8     4 no_desertor     1 0.5  
-##  9     5 desertor        4 0.8  
-## 10     5 no_desertor     1 0.2  
-## # … with 76 more rows</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb20-1" aria-hidden="true" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span> <span class="fu">select</span>(p5) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 12,317 × 1
-##       p5
-##    &lt;dbl&gt;
-##  1    28
-##  2    37
-##  3    17
-##  4    24
-##  5    22
-##  6    19
-##  7    31
-##  8    21
-##  9    45
-## 10    11
-## # … with 12,307 more rows</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="estadísticos-descriptivos-del-abandono-escolar.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(encuesta<span class="sc">$</span>p5)</span></code></pre></div>
-<pre><code>##  [1] 28 37 17 24 22 19 31 21 45 11  9 20 26 29 16 10 33 23 27 32 15 35 44  5 13
-## [26] 14 30 25 34 36 38  1  3 12  6 39 18  8  7  2 40 41  4</code></pre>
+##  1   6   desertor       39  0.53
+##  2   6   no_desertor    34  0.47
+##  3   6.1 desertor        4  0.8 
+##  4   6.1 no_desertor     1  0.2 
+##  5   6.2 desertor        5  0.45
+##  6   6.2 no_desertor     6  0.55
+##  7   6.3 desertor        1  0.5 
+##  8   6.3 no_desertor     1  0.5 
+##  9   6.4 desertor        4  0.8 
+## 10   6.4 no_desertor     1  0.2 
+## # … with 72 more rows</code></pre>
 
 </div>
-</div>
-<div class="footnotes footnotes-end-of-document">
-<hr />
-<ol>
-<li id="fn1"><p>Lineamientos para la elaboración de indicadores educativos<a href="introducción.html#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="carga-de-datos.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="carga-de-datos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="preprocesamiento-e-ingenieria-de-entradas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -2,33 +2,31 @@
 
 Empezaremos este ejercicio dividiendo nuestra encuesta, en dos set de datos uno para el entrenamiento y otro para la prueba, por ese motivo decidimos separa la base usando un muestreo estratificado debido a que las muestra no es balanceada.
 
-Decidimos guardar **30%** como datos de prueba, siendo 3,696 y usar el restante **8,621** como datos de entrenamiento, usar el 30% de los datos de entrenamiento para hacer validación cruzada, quedando como sigue:
+Decidimos guardar **20%** como datos de prueba, siendo **2,464** y usar el restante **9,853** como datos de entrenamiento, de estos usar el **20%** de los datos de entrenamiento para hacer validación, quedando como sigue:
 
-|Division|Total|%|
+|Division|Total|Porcentaje|
 |---|---|---|
-|Prueba|3,696|30%|
-|Entrenamiento|8,621|70%|
+|Prueba|2,464|20%|
+|Entrenamiento|9,853|80%|
+|Total|12,317|100%|
 
-Posteriormente la muestra de entrenamiento se subdivide, para crear espacio para la muestra de validación cruzada.
+Posteriormente la muestra de entrenamiento se subdivide, para crear espacio para la muestra de validación.
 
-|Division|Total|%|
+|Division|Total|Porcentaje|
 |---|---|---|
-|Entrenamiento|6,034|70%|
-|Validación Cruzada|2,587|30%|
+|Entrenamiento|7,882|80%|
+|Validación |1,971|20%|
+|Total |9,853|100%|
+<7882/1971/9853>
 
-
-
-
-
-sin embargo subdividiremos estos, toda vez que vamos a guardar algunos de los datos para hacer validación cruzada.
 
 ```{r}
 set.seed(2021)
 
 
-encuesta_part_inicial <- initial_split(encuesta, strata = desertor, prop = 0.70)
+encuesta_part_inicial <- initial_split(encuesta, strata = desertor, prop = 0.80)
 encuesta_total <- training(encuesta_part_inicial)
-encuesta_part_val <- validation_split(encuesta_total, prop = 0.70)
+encuesta_part_val <- validation_split(encuesta_total, prop = 0.80)
 encuesta_part_val$splits
 
 
@@ -89,37 +87,36 @@ entrena %>% select(edad, desertor) %>%
 ##  Variables claramente importantes (hipótesis):
 
 - lead time (cuánto tiempo de anticipación en la reserva), 
-- tipo de depósito (que tiene un nivel de "Non-refundable"), 
-- historial de cancelaciones, 
-- tipo de hotel
-- tipo de cliente 
+- Sexo 
+- Tiempo de la escuela a la casa
+- Tener hijos
+- Consumo de Drogas
 
 
 ```{r}
 tabla_univariada <- function(datos, variable, target){
   datos %>% count({{ variable }}, {{ target }}) %>% group_by({{ variable }}) %>% 
-  mutate(prop = n / sum(n)) %>% mutate(prop = round(prop, 3)) }
+  mutate(prop = n / sum(n)) %>% mutate(prop = round(prop, 2)) }
 
 tabla_univariada(encuesta, p5, desertor)
 ```
 
 ```{r}
-tabla_univariada(encuesta, p8, desertor)
+
 ```
 ```{r}
-encuesta
-```
 
-```{r}
-encuesta %>% select(p12_1:p12_10ts) %>% filter(p12_8 == " Si")
-
-tabla_univariada(encuesta, p12_8, desertor)
-
-
-tabla_univariada(encuesta, p32, desertor)
 ```
 
 ```{r}
-tabla_univariada(encuesta, p41f, desertor)
+
+
 ```
+
+```{r}
+
+```
+
+
+
 

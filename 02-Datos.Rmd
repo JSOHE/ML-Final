@@ -30,6 +30,9 @@ A continuaciónse correrán los Script de **R** diseñados colocar los nombres d
 source("clave_edo_mun.R")
 ```
 
+
+
+
 El siguiente Script cambia todas las variables *havel_labelled* a *factor*.
 ```{r}
 source("clave_preg.R")

@@ -1,0 +1,94 @@
+# Preprocesamiento e ingenieria de entradas:
+
+
+Usaremos una receta más simple (no necesariamente tenemos que poner interacciones,
+categorización de entradas, transformaciones no lineales):
+```{r}
+entrena %>% names
+```
+
+
+```{r}
+library(tidymodels)
+receta <- 
+  recipe(desertor ~ .,
+                       data = entrena) %>%
+  step_dummy(all_nominal_predictors()) %>%
+  step_zv(all_predictors())
+```
+
+Dimensión de los datos:
+
+```{r}
+prep(receta, entrena) %>% juice() %>% dim()
+```
+
+
+Empezamos con parámetros más o menos default
+
+```{r}
+modelo_boosting <- boost_tree(learn_rate = 0.1, trees = 3000, 
+                              mtry = 5, tree_depth = 3, sample_size = 0.8) %>%
+  set_mode("classification") %>% 
+  set_args(objective = "binary:logistic")
+flujo <- workflow() %>% add_recipe(receta) %>% add_model(modelo_boosting)
+flujo_fit <- fit(flujo, entrena)
+```
+
+```{r}
+ajuste_xgboost <- flujo_fit %>% extract_fit_engine() %>% pluck("evaluation_log") %>%
+  as_tibble()
+ggplot(ajuste_xgboost, aes(x=iter, y = training_logloss)) + geom_line()
+```
+
+
+
+
+```{r}
+valida <- testing(encuesta_part_val$splits[[1]])
+preds_val <- predict(flujo_fit, valida, type = "prob") |> 
+  bind_cols(valida |> select(desertor))
+```
+
+
+```{r}
+mis_metricas <- metric_set(mn_log_loss, roc_auc)
+mis_metricas(preds_val, truth = factor(desertor), .estimate = .pred_desertor, event_level = "first")
+```
+
+```{r}
+preds_entrena <- predict(flujo_fit, entrena, type = "prob") %>% 
+  bind_cols(entrena %>% select(desertor))
+```
+
+
+```{r}
+mis_metricas <- metric_set(mn_log_loss, roc_auc)
+mis_metricas(preds_entrena, truth = factor(desertor), .estimate = .pred_desertor, event_level = "first")
+```
+```{r}
+ggplot(preds_val, aes(x = .pred_desertor, fill = factor(desertor))) + 
+  geom_histogram()
+```
+
+
+
+### Preparar solución
+# NO sé como hacer esto
+
+
+```{r}
+encuesta_test  <-  testing(encuesta_part_inicial)
+
+preds_prueba_sol <- predict(flujo_fit, encuesta_test, type="prob") %>% 
+  bind_cols(encuesta_test %>% select(desertor)) %>%
+  select(desertor, prob = .pred_desertor)
+  
+### No sale
+#mis_metricas(preds_prueba_sol, truth = factor(desertor), .estimate = #.pred_desertor, event_level = "first")
+```
+
+**Resultados**:
+
+1. Esto modelo logra un score de 0.385
+2. Afina para llegar a 0.375, que fue el score ganador del concurso.

@@ -12,7 +12,7 @@ encuesta$cedo_muni <- paste(encuesta$cedo, encuesta$cmuni, sep="")
 
 # Codificacion municipio
 
-encuesta$n_mun <- recode_factor(encuesta$cedo_muni,
+encuesta$muni <- recode_factor(encuesta$cedo_muni,
 `01001` =	"Aguascalientes",
 `01002` =	"Asientos",
 `01003` =	"Calvillo",
@@ -2524,6 +2524,7 @@ encuesta$edo <- recode_factor(encuesta$edo,
                               `30` =	'Ver',
                               `31` =	'Yuc',
                               `32` =	'Zac')
+
 
 
 

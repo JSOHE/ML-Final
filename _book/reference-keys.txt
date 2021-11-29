@@ -7,3 +7,6 @@ resumen-general
 el-género-influye
 entendiendo-la-edad
 variables-claramente-importantes-hipótesis
+preprocesamiento-e-ingenieria-de-entradas
+preparar-solución
+no-sé-como-hacer-esto

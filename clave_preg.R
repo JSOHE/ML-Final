@@ -1,34 +1,94 @@
+# Primero escribimos NA en las variables con 9, 99.9 y 99.8
+################################################################################
+
+encuesta$p10h[encuesta$p10h == 99] <- NA
+encuesta$p10m[encuesta$p10m == 99] <- NA
+
+
+
+### Crea la variable tiempo de traslado
+encuesta <- encuesta %>% mutate(p10 = p10h*60 + p10m)
+
+
+##Selección de Variables
+################################################################################
+
+encuesta <- encuesta %>% select(desertor,
+                                edo,
+                                muni,  
+                                edad, 
+                                sexo, 
+                                p5, 
+                                p6,   
+                                p7,    
+                                p9_1:p9_12,    
+                                p10,
+                                p12_1:p12_10,
+                                p14,    
+                                p15,  
+                                p16,  
+                                p17,   
+                                p18,   
+                                p23_1:p23_2,  
+                                p25_1:p25_23,    
+                                p27,     
+                                p39,    
+                                p40_1:p40_15,  
+                                p41a:p41i
+                                )
+  
+
 ####Recodificacion de variables
 ################################################################################
 
-# Cambia las variables a factor 
-encuesta <- encuesta %>% mutate_at(vars(8:11,14:123,125), as_factor)
-encuesta <- encuesta %>% mutate_at(vars(edad), as.integer)
-encuesta <- encuesta %>% mutate_at(vars(p5,p10h,p10m), as.numeric)
 
-encuesta <- encuesta %>% mutate(tiempo = p10h*60 + p10m) %>% glimpse
+# Cambia las variables  como integer o numeric
+encuesta <- encuesta %>% mutate_at(vars(edad), as.integer)
+encuesta <- encuesta %>% mutate_at(vars(p5, p10, p15), as.numeric)
 
 # cambia la variable desertor: 1 =  desertor, 2 = no desertor
 
 encuesta$desertor <-  recode_factor(encuesta$desertor,
-              `1` = "desertor",
-              `0` = "no_desertor")
+                                    `1` = "desertor",
+                                    `0` = "no_desertor")
 
-######## Se eliminan variables que no aportan nada al entendimiento de los desertores
-################################################################################
+# Cambia las variables a factor
+encuesta <- encuesta %>% mutate_at(vars(sexo,
+                                        p6,
+                                        p7,
+                                        p9_1:p9_12,
+                                        p12_1:p12_10,
+                                        p14,
+                                        p16,
+                                        p17,
+                                        p18,
+                                        p23_1,p23_2,
+                                        p25_1:p25_23,
+                                        p27,
+                                        p39,
+                                        p40_1:p40_15,
+                                        p41a:p41i), as_factor)
 
-#f20h se refiere a la hora en que se hizo la encuesta y 
-#f20m se refiere al minuto en que se hizo la encuesta.
-# cedo era una clave que se utilizó para generar los municipio y poner nombres.
-# cmuni era una clave usada para poner nombre a los municipios
-#p2m es el mes en que entró a estudiar la educación media superior
-#p2a es el año en que entró a estudiar la educación media superior
-#p4  = "Para entrar a la preparatoria, bachillerato o carrera técnica, es muy probable que hayas realizado el EXANI I o COMIPEMS ¿Podrías decirme cuál fue tu puntaje en el EXANI I o en el COMIPEMS? Si no lo recuerdas exactamente, por favor dime una cifra aproximada."
-# p10h y p10m se toman para crear la variable "tiempo", se deja todo en minutos 
-encuesta <- encuesta %>% select(-folio, -muni, -f20h,-f20m, 
-                                -p2m, -p2a, 
-                                -cedo, -cmuni, -cedo_muni, 
-                                -p4, -p10h,-p10m)
+
+#Arreglamos los NA
+
+encuesta[encuesta == 99.9] <-  NA
+encuesta[encuesta == 99.8] <-  NA
+#encuesta[encuesta == -1] <-  NA
+# Imputar promedio en variables numericas
+
+  encuesta <- encuesta %>%
+    mutate_at(vars(p5,p10,p15),
+      funs(ifelse(is.na(.), round(mean(., na.rm = TRUE),1), .)))
+  
+
+
+
+
+
+
+
+
 
 #### clave preguntas ---  se irá completando el apartado
 ################################################################################
@@ -78,37 +138,138 @@ encuesta <- encuesta %>% select(-folio, -muni, -f20h,-f20m,
 #p39 = "¿Cuántos cuartos para dormir tenía la casa donde vivías cuándo estudiabas la preparatoria, bachillerato o carrera técnica?"
 #p40 = "¿Con cuáles de las siguientes cosaas contabas en casa cuando estudiabas la preparatoria, el bachillerato o la carrera técnica?"
 #p41 = "A continuación te voy a entregar una hoja que llenarás tú mismo, de esta forma se garantiza que tus respuestas serán absolutamente anónimas y confidenciales. Puede que algunas de estas preguntas no apliquen para ti. Cuando cursabas la preparatoria, bachillerato o carrera técnica ¿Con qué frecuencia consumías los productos que aparecen en la primer columna de la hoja?"
-# [PASE A SOCIODEMOGRÁFICOS]
-#p42 = "[MOSTRAR TARJETA] A continuación te voy a mostrar una tarjeta con algunos niveles de estudio. Por favor dime ¿cuál es el último nivel de estudios que cursaste aunque no hayas terminado?"
-#p1  = "[MOSTRAR TARJETA] A continuación te voy a mostrar una tarjeta con algunas opciones de educación media superior. Por favor dime cuál de ellas has cursado o en cuál de ellas has estado inscrito aunque no la hayas terminado."
 
-#p43 = "Ahora dime, ¿en qué año ingresaste a la preparatoria, bachillerato o carrera técnica?"
-#p44 = "Cuando ingresaste a la preparatoria, bachillerato o carrera técnica, es muy probable que hayas realizado el EXANI I o COMIPEMS ¿Podrías decirme cuál fue tu puntaje en el EXANI I o en el COMIPEMS? Si no lo recuerdas exactamente, por favor dime una cifra aproximada."
-#p45 = "En una escala del 0 al 10, ¿cuál fue tu promedio de la secundaria? Si no lo recuerdas exactamente, por favor dime una cifra aproximada. [ENCUESTADOR: ACEPTAR SOLO UN DECIMAL]"
-#p46 = "Y la secundaria a la que asististe, ¿era pública o privada?"
-#p47 = "¿Cuántas veces te cambiaste de escuela durante tus estudios de preparatoria, bachillerato o carrera técnica?"
-#p48 = "¿Y alguno de esos cambios de escuela se debió a que te cambiaste de casa o se debió a otra razón?"
-#p49 = "[MOSTRAR TARJETA] Ahora por favor piensa en tus estudios de preparatoria, bachillerato o carrera técnica y dime en cuál de las instituciones que aparecen en la tarjeta estás o estabas inscrito."
-#p50 = "P50. Al cursar la preparatoria, bachillerato o carrera técnica ¿Cuánto tiempo te tomaba llegar a la institución a la que asistes o asistías?"
-#p51 = "[MOSTRAR TARJETA] A continuación te voy a mostrar una lista de algunas razones por las que la gente puede elegir una escuela sobre otra. Ahora por favor dime cuál de ellas fue la más importante para ti cuando elegiste la escuela en la que estudias o estudiaste la preparatoria, bachillerato o carrera técnica. [ESPERAR RESPUESTA] ¿Y la segunda más importante? [ESPERAR RESPUESTA] ¿Y la tercera?"
-#p52 =
-#  p53 =
-#  p54 =
-#  p55 =
-#  p56 =
-#  p57 =
-#  p58 =
-#  p59 =
-#  p60 =
-#  p61 =
-#  p62 =
-#  p63 =
-#  p64 =
   
   
-  # similares
-  # p1 = p42
-  # p2 = p43
-  # p3 = p44
-  # p3 = p44
+
+#"folio"  NO
+#"edo"    SI 
+#"muni"   SI   
+#"loc"   NO   
+#"ageb"   NO    
+#"f7"     NO  
+#"edad"   NO (USADA COMO FILTRO)   
+#"sexo"   SI
+#"ins"    NO  
+#"ultimo" NO
+#"actual" NO 
+#"f20h"   NO   
+#"f20m"   NO
+#"f21"    NO 
+#"p1"     NO   
+#"p2m"    NO
+#"p2a"    NO 
+#"p4"     NO
+#"p5"     SI
+#"p6"     SI
+#"p7"     SI 
+#"p8"     NO
+#"p9_1"   SI   
+#"p9_2"   SI
+#"p9_3"   SI
+#"p9_4"   SI
+#"p9_5"   SI
+#"p9_6"   SI
+#"p9_7"   SI
+#"p9_8"   SI
+#"p9_9"   SI
+#"p9_10"  SI
+#"p9_11"  SI
+#"p9_12"  SI
+#"p9ot"   NO (es la respueta de la p9_12)
+#"p10h"   NO (Se calcula la variable tiempo_traslasdo)
+#"p10m"   NO
+#"p11_1"  NO
+#"p11_2"  NO  
+#"p11_3"  NO 
+#"p12_1"  SI  
+#"p12_2"  SI 
+#"p12_3"  SI 
+#"p12_4"  SI
+#"p12_5"  SI 
+#"p12_6"  SI
+#"p12_7"  SI
+#"p12_8"  SI 
+#"p12_9"  SI
+#"p12_10" SI 
+#"p12_5cts" NO
+#"p12_6cts" NO
+#"p12_7cts" NO
+#"p12_8cts" NO
+#"p12_10ts" NO
+#"p13_1"  NO
+#"p13_2"  NO 
+#"p13_3"  NO
+#"p13_4"  NO
+#"p13_5"  NO 
+#"p13_6"  NO 
+#"p13_7"  NO
+#"p14"    SI  
+#"p15"    SI
+#"p16"    SI
+#"p17"    SI 
+#"p18"    SI 
+#"p19"    NO  
+#"p23_1"  SI  
+#"p23_2"  SI
+#"p23_1cts" NO
+#"p23_2cts" NO
+#"p25_1"  SI   
+#"p25_2"  SI
+#"p25_3"  SI 
+#"p25_4"  SI
+#"p25_5"  SI 
+#"p25_6"  SI 
+#"p25_7"  SI 
+#"p25_8"  SI 
+#"p25_9"  SI 
+#"p25_10" SI
+#"p25_11" SI 
+#"p25_12" SI 
+#"p25_13" SI 
+#"p25_14" SI
+#"p25_15" SI 
+#"p25_16" SI
+#"p25_17" SI  
+#"p25_18" SI 
+#"p25_19" SI
+#"p25_20" SI 
+#"p25_21" SI 
+#"p25_22" SI
+#"p25_23" SI 
+#"p27"    SI    
+#"p29"    NO 
+#"p30"    NO   
+#"p39"    SI  
+#"p40_1"  SI
+#"p40_2"  SI  
+#"p40_3"  SI  
+#"p40_4"  SI 
+#"p40_5"  SI  
+#"p40_6"  SI  
+#"p40_7"  SI 
+#"p40_8"  SI   
+#"p40_9"  SI  
+#"p40_10" SI 
+#"p40_11" SI  
+#"p40_12" SI  
+#"p40_13" SI 
+#"p40_14" SI  
+#"p40_15" SI  
+#"p41a"   SI 
+#"p41b"   SI  
+#"p41c"   SI  
+#"p41d"   SI 
+#"p41e"   SI  
+#"p41f"   SI  
+#"p41g"   SI 
+#"p41h"   SI 
+#"p41i"   SI  
+#"id"      NO
+#"cedo"    NO 
+#"cmuni"   NO
+#"cedo_muni" NO
+
+
+
   
