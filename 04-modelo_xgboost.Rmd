@@ -9,12 +9,30 @@ entrena %>% names
 
 
 ```{r}
-library(tidymodels)
-receta <- 
-  recipe(desertor ~ .,
+receta <-   recipe(desertor ~ edo +
+                              muni +  
+                              edad + 
+                              sexo + 
+                              p5 + 
+                              p6 +   
+                              p7 +    
+                              p9_1 + p9_2 + p9_3 + p9_4 + p9_5 + p9_6 + p9_7 + p9_8 + p9_9 +p9_10 + p9_11 + p9_12 +    
+                              p10 +
+                              p12_1 + p12_2 + p12_3 + p12_4 + p12_5 + p12_6 + p12_7 + p12_8 + p12_9 + p12_10 +
+                              p14 +    
+                              p15 +  
+                              p16 +  
+                              p17 +   
+                              p18 +   
+                              p23_1 + p23_2 + 
+                              p25_1 + p25_2 + p25_3 + p25_4 + p25_5 + p25_6 + p25_7 + p25_8 + p25_9 + p25_10 + p25_11 + p25_12 + p25_13 + p25_14 + p25_15 + p25_16 + p25_17 +p25_18 + p25_19 + p25_20 + p25_21 + p25_22 + p25_23 +   
+                              p27 +     
+                              p39 +    
+                              p40_1 + p40_2 + p40_3 + p40_4 + p40_5 + p40_6 + p40_7 + p40_8 + p40_9 + p40_10 + p40_11 + p40_12 + p40_13 + p40_14 + p40_15 +  
+                              p41a + p41b + p41c + p41d + p41e + p41f+ p41g + p41h + p41i,
                        data = entrena) %>%
   step_dummy(all_nominal_predictors()) %>%
-  step_zv(all_predictors())
+  step_zv(all_predictors()) #step_zv  remove variables that contain only a single value.
 ```
 
 Dimensión de los datos:

@@ -9,33 +9,6 @@ encuesta$p10m[encuesta$p10m == 99] <- NA
 ### Crea la variable tiempo de traslado
 encuesta <- encuesta %>% mutate(p10 = p10h*60 + p10m)
 
-
-##Selección de Variables
-################################################################################
-
-encuesta <- encuesta %>% select(desertor,
-                                edo,
-                                muni,  
-                                edad, 
-                                sexo, 
-                                p5, 
-                                p6,   
-                                p7,    
-                                p9_1:p9_12,    
-                                p10,
-                                p12_1:p12_10,
-                                p14,    
-                                p15,  
-                                p16,  
-                                p17,   
-                                p18,   
-                                p23_1:p23_2,  
-                                p25_1:p25_23,    
-                                p27,     
-                                p39,    
-                                p40_1:p40_15,  
-                                p41a:p41i
-                                )
   
 
 ####Recodificacion de variables
