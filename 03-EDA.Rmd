@@ -98,9 +98,9 @@ datos_entrena <- entrena %>% select(edad, desertor) %>%
 - Tipo de secundaria a la que asistió (p6)
 - Te cambiaste de escuela (p7)
 - En qué tipo de institución estudiaste (p8)
-- Cuanto haces a la escuela (p10)
+- Cuanto tiempo haces a la escuela (p10)
 - ¿Con quien vives? (P12_1:P12_10)
-- Tiempo de la escuela a la casa
+- ¿Que tanto asistes a tus clases? (p14)
 - Tener hijos
 - Consumo de Drogas
 
@@ -113,8 +113,12 @@ tabla_univariada <- function(datos, variable, target){
 
 tabla_univariada(entrena, p5, desertor) %>%
   ggplot(aes(p5, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") + xlab("Promedio Secundaria")
+  geom_col(position = "dodge") + ggtitle("Promedio Secundaria")
 
+
+entrena %>% select(sexo, desertor, p5) %>% group_by(sexo, desertor) %>%
+  ggplot(aes(p5, sexo, fill = desertor)) + 
+  geom_boxplot() + ggtitle("Promedio Secundaria")
 ```
 #### Pública o Privada
 Se observa que si la educación es privada la probabilidad de deserción es $18\%$, mientras que si es pública es $33\%$.
@@ -141,22 +145,47 @@ entrena %>% select(sexo, desertor, p10, ) %>% group_by(sexo, desertor) %>%
 ```{r}
 tabla_univariada(entrena, p12_1, desertor) %>%
   ggplot(aes(p12_1, pcn, fill = desertor)) + 
-  geom_col(position = "stack") + ggtitle("Vivo solo")
+  geom_col(position = "dodge") + ggtitle("¿Vives solo?")
 
 ```
 
 ```{r}
-tabla_univariada(entrena, p12_2, desertor) %>% filter(p12_2 != -1) %>%
-  ggplot(aes(p12_2, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") +  ggtitle("Vivo con mi madre")
 
-tabla_univariada(entrena, p12_3, desertor) %>% filter(p12_3 != -1) %>%
-  ggplot(aes(p12_3, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") +  ggtitle("Vivo con mi padre")
-
-tabla_univariada(entrena, p12_8, desertor) %>% filter(p12_8 != -1) %>%
+tabla_univariada(entrena, p12_8, desertor)  %>%
   ggplot(aes(p12_8, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") +  ggtitle("Vivo con hijos")
+  geom_col(position = "dodge") +  ggtitle("¿Vives con tus hijos?")
+
+tabla_univariada(entrena, p12_9, desertor)  %>%
+  ggplot(aes(p12_9, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("¿Vives con esposo(a) o pareja?")
+```
+##### ¿Si eres mujer y vives con tus hijo es lo mismo que si eres hombre?
+
+```{r}
+entrena %>% select(sexo, p12_9, desertor) %>% 
+  filter(sexo == " Mujer") %>% group_by(p12_9, desertor) %>% tally() %>% mutate(pcn = round(n/sum(n),2)) %>%
+  ggplot(aes(p12_9, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("Mujer: ¿Vives con tus hijos?")
+```
+
+```{r}
+entrena %>% select(sexo, p12_9, desertor) %>% 
+  filter(sexo == " Hombre") %>% group_by(p12_9, desertor) %>% tally() %>% mutate(pcn = round(n/sum(n),2)) %>%
+  ggplot(aes(p12_9, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("Hombre: ¿Vives con tus hijos?")
+```
+
+#### ¿Qué tanto asistias a tus clases?
+
+```{r}
+
+
+tabla_univariada(entrena, p14, desertor) %>% 
+  ggplot(aes(p14, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("¿Qué tanto faltabas a clase?") +
+  scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 2), 
+                     labels = function(x) stringr::str_wrap(x, width = 20))
+
 ```
 
 

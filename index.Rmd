@@ -19,7 +19,8 @@ output:
 
 ```{r, setup, include=FALSE}
 
-knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, echo = TRUE, dpi= 180, fig.width = 8, fig.height = 5)
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
+                      echo = TRUE, dpi= 180, fig.width = 8, fig.height = 5)
 
 
 library(dplyr)
@@ -58,17 +59,23 @@ Del 25 de junio al 30 de julio de 2011.
 
 Existen una población de interés y 3 subpoblaciones.
 
-![](~/Maestria/Final ML/Imagen/Poblacion.png){width=100%}
+
+
+ 
+![](./Imagen/Poblacion.png){width=100%}
+
 
 **1.** Los desertores: aquellos jóvenes que iniciaron la Educación Media Superior y al momento de la entrevista no la habían concluido ni se encontraban realizando estudios para concluir este nivel educativo.
+
 **2.** Los no desertores: aquellos estudiantes que iniciaron la Educación Media Superior y al momento de la entrevista: a) ya la habían terminaron, o b) no la habían terminado pero seguían estudiando para completarla.
+
 **3.** Los no matriculados: aquellos jóvenes que al momento de la entrevista no estaban inscritos en la Educación Media Superior, ya sea porque seguían estudiando y todavía no terminaban la secundaria o porque no estaban estudiando y abandonaron sus estudios en algún momento anterior a la media superior.
 
 
 
 El tamaño de muestra se fijó en 2,000 desertores, para lo cual se estimó necesario visitar 44,000 viviendas. De esta forma, se aprovechó también el número de visitas para recabar informacíon de jóvenes que nunca se inscribieron a la Educación Media Superior, ya sea porque seguían estudiando la secundaria, porque desertaron del sistema educativo mientras estudiaban la Educación Básica o porque concluyeron ese nivel y no transitaron al siguiente.
 
-El esquema de muestreo fue **probabilista**, **estratificado**, por **conglomerados** y **polietápioc*o. La población objetivo de la ENDEMS estuvo compuesta por jóvenes, hombres y mujeres, de entre 14 y 25 años de edad que residían permanentemente en viviendas particulares ubicadas en localidades con más de 500 habitantes dentro del territorio nacional
+El esquema de muestreo fue **probabilista**, **estratificado**, por **conglomerados** y **polietáptico**. La población objetivo de la ENDEMS estuvo compuesta por jóvenes, hombres y mujeres, de entre 14 y 25 años de edad que residían permanentemente en viviendas particulares ubicadas en localidades con más de 500 habitantes dentro del territorio nacional.
 
 La ENDEMS es la primera encuesta que se levanta en México específicamente sobre deserción en la Educación Media Superior y que es representativa a nivel nacional. 
 

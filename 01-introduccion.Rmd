@@ -26,7 +26,7 @@ De 100 alumnos inscritos en primaria, 60 concluyeron la secundaria, y 36 termina
 
 En términos prácticos un desertor es:
 
-"Aquella persona que inició el grado o el nivel educativo correspondiente, no lo concluyó y no se encuentra realizando estudios para alcanzar dicha conclusión"
+> "Aquella persona que inició el grado o el nivel educativo correspondiente, no lo concluyó y no se encuentra realizando estudios para alcanzar dicha conclusión"
 
 
    

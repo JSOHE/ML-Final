@@ -24,7 +24,7 @@
 <meta name="author" content="Valeria &amp; Juan Carlos" />
 
 
-<meta name="date" content="2021-11-29" />
+<meta name="date" content="2021-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -168,14 +168,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="no-sé-como-hacer-esto" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> NO sé como hacer esto</h1>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="no-sé-como-hacer-esto.html#cb35-1" aria-hidden="true" tabindex="-1"></a>encuesta_test  <span class="ot">&lt;-</span>  <span class="fu">testing</span>(encuesta_part_inicial)</span>
-<span id="cb35-2"><a href="no-sé-como-hacer-esto.html#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="no-sé-como-hacer-esto.html#cb35-3" aria-hidden="true" tabindex="-1"></a>preds_prueba_sol <span class="ot">&lt;-</span> <span class="fu">predict</span>(flujo_fit, encuesta_test, <span class="at">type=</span><span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-4"><a href="no-sé-como-hacer-esto.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(encuesta_test <span class="sc">%&gt;%</span> <span class="fu">select</span>(desertor)) <span class="sc">%&gt;%</span></span>
-<span id="cb35-5"><a href="no-sé-como-hacer-esto.html#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(desertor, <span class="at">prob =</span> .pred_desertor)</span>
-<span id="cb35-6"><a href="no-sé-como-hacer-esto.html#cb35-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb35-7"><a href="no-sé-como-hacer-esto.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="do">### No sale</span></span>
-<span id="cb35-8"><a href="no-sé-como-hacer-esto.html#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co">#mis_metricas(preds_prueba_sol, truth = factor(desertor), .estimate = #.pred_desertor, event_level = &quot;first&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="no-sé-como-hacer-esto.html#cb42-1" aria-hidden="true" tabindex="-1"></a>encuesta_test  <span class="ot">&lt;-</span>  <span class="fu">testing</span>(encuesta_part_inicial)</span>
+<span id="cb42-2"><a href="no-sé-como-hacer-esto.html#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="no-sé-como-hacer-esto.html#cb42-3" aria-hidden="true" tabindex="-1"></a>preds_prueba_sol <span class="ot">&lt;-</span> <span class="fu">predict</span>(flujo_fit, encuesta_test, <span class="at">type=</span><span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="no-sé-como-hacer-esto.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(encuesta_test <span class="sc">%&gt;%</span> <span class="fu">select</span>(desertor)) <span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="no-sé-como-hacer-esto.html#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(desertor, <span class="at">prob =</span> .pred_desertor)</span>
+<span id="cb42-6"><a href="no-sé-como-hacer-esto.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-7"><a href="no-sé-como-hacer-esto.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="do">### No sale</span></span>
+<span id="cb42-8"><a href="no-sé-como-hacer-esto.html#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co">#mis_metricas(preds_prueba_sol, truth = factor(desertor), .estimate = #.pred_desertor, event_level = &quot;first&quot;)</span></span></code></pre></div>
 <p><strong>Resultados</strong>:</p>
 <ol style="list-style-type: decimal">
 <li>Esto modelo logra un score de 0.385</li>
@@ -249,6 +249,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

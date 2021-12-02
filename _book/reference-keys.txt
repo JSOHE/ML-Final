@@ -1,0 +1,16 @@
+tab:unnamed-chunk-6
+introducción
+carga-de-datos
+estadísticos-descriptivos-del-abandono-escolar
+limpieza-exploración-y-análisis-conceptual
+resumen-general
+el-género-influye
+entendiendo-la-edad
+variables-claramente-importantes-hipótesis
+promedio-secundaria
+cuantos-minutos-haces-para-llegar-a-la-escuela
+con-quien-vives-p12_1p12_10
+qué-tanto-asistias-a-tus-clases
+preprocesamiento-e-ingenieria-de-entradas
+preparar-solución
+no-sé-como-hacer-esto

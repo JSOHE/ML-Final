@@ -3,9 +3,6 @@
 
 Usaremos una receta más simple (no necesariamente tenemos que poner interacciones,
 categorización de entradas, transformaciones no lineales):
-```{r}
-entrena %>% names
-```
 
 
 ```{r}
@@ -34,6 +31,7 @@ receta <-   recipe(desertor ~ edo +
   step_dummy(all_nominal_predictors()) %>%
   step_zv(all_predictors()) #step_zv  remove variables that contain only a single value.
 ```
+
 
 Dimensión de los datos:
 
@@ -110,3 +108,9 @@ preds_prueba_sol <- predict(flujo_fit, encuesta_test, type="prob") %>%
 
 1. Esto modelo logra un score de 0.385
 2. Afina para llegar a 0.375, que fue el score ganador del concurso.
+
+
+```{r}
+
+```
+

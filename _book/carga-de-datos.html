@@ -24,7 +24,7 @@
 <meta name="author" content="Valeria &amp; Juan Carlos" />
 
 
-<meta name="date" content="2021-11-29" />
+<meta name="date" content="2021-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -173,30 +173,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Lo primero que se tuvo que hacer fue modificar la encuesta ya que su unidad básica era el hogar, por ello se tuvieron que trabajar los datos para colocarlos por población objetivo, es decir aquelos jóvenes entre 14 y 21 años que habìna deseratdo de la educación media superior.</p>
 <p>Al hacer esto nos encotramos con una base de <strong>12,317</strong> adolescentes que fueron entrevistados (diferentes a las 13,014 viviendas en las que se habia aplicado la encuesta)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="carga-de-datos.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Es importante que se habra con el encoding porque corrige los acentos.</span></span>
-<span id="cb1-2"><a href="carga-de-datos.html#cb1-2" aria-hidden="true" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&#39;./Data/base_abandono.dta&#39;</span>, <span class="at">encoding=</span> <span class="st">&quot;Latin1&quot;</span>)</span></code></pre></div>
-<p>Una vez cargada la encuesta, encontramos que no estaba codificada por ello, tomamos todos los datos y construimos los factores, haciendo más manejable la encuesta, cabe señalar que esta parte del trabajo tomó mucho timepo ya que se codificaron las variables a factores.</p>
+<span id="cb1-2"><a href="carga-de-datos.html#cb1-2" aria-hidden="true" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;./Data/encuesta.rds&quot;</span>)</span></code></pre></div>
+<p>Una vez cargada la encuesta, encontramos que no estaba codificada por ello, tomamos todos los datos y construimos los factores, haciendo más manejable la encuesta, cabe señalar que esta parte del trabajo tomó mucho tiempo ya que se codificaron las variables a factores.</p>
 <p>Como puede ver a continuación algunos de los nombres de las columnas eran de clase <em>“haven_labelled”</em> por esta razón se procedió a cambiarlos a factor junto con otras, 114 variables.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="carga-de-datos.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encuesta,<span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 4 × 125
-##   folio   edo  muni  loca ageb     f7      edad    sexo     ins  ultimo   actual
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl+lbl&gt; &lt;dbl+l&gt; &lt;dbl+l&gt; &lt;dbl+l&gt; &lt;dbl+lb&gt;
-## 1     4     1     1     1 0799      4        14 2 [ Mu… 2 [ No] 3 [ Se… -1      
-## 2     7     1     1     1 0799      2        17 2 [ Mu… 1 [ Si] 5 [ Ba…  3 [ De…
-## 3   203     1     1     1 0799      1        21 1 [ Ho… 1 [ Si] 4 [ Pr…  3 [ De…
-## 4   217     1     1     1 0799      1        16 1 [ Ho… 1 [ Si] 4 [ Pr…  3 [ De…
-## # … with 114 more variables: f20h &lt;dbl&gt;, f20m &lt;dbl&gt;, f21 &lt;dbl+lbl&gt;,
-## #   p1 &lt;dbl+lbl&gt;, p2m &lt;dbl+lbl&gt;, p2a &lt;dbl+lbl&gt;, p4 &lt;dbl+lbl&gt;, p5 &lt;dbl+lbl&gt;,
-## #   p6 &lt;dbl+lbl&gt;, p7 &lt;dbl+lbl&gt;, p8 &lt;dbl+lbl&gt;, p9_1 &lt;dbl+lbl&gt;, p9_2 &lt;dbl+lbl&gt;,
-## #   p9_3 &lt;dbl+lbl&gt;, p9_4 &lt;dbl+lbl&gt;, p9_5 &lt;dbl+lbl&gt;, p9_6 &lt;dbl+lbl&gt;,
-## #   p9_7 &lt;dbl+lbl&gt;, p9_8 &lt;dbl+lbl&gt;, p9_9 &lt;dbl+lbl&gt;, p9_10 &lt;dbl+lbl&gt;,
-## #   p9_11 &lt;dbl+lbl&gt;, p9_12 &lt;dbl+lbl&gt;, p9ot &lt;dbl+lbl&gt;, p10h &lt;dbl+lbl&gt;,
-## #   p10m &lt;dbl+lbl&gt;, p11_1 &lt;dbl+lbl&gt;, p11_2 &lt;dbl+lbl&gt;, p11_3 &lt;dbl+lbl&gt;, …</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="carga-de-datos.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(encuesta<span class="sc">$</span>edad)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 127
+##   folio edo   muni   loca ageb     f7  edad sexo      ins  ultimo   actual  f20h
+##   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;fct&gt; &lt;dbl+l&gt; &lt;dbl+l&gt; &lt;dbl+lb&gt; &lt;dbl&gt;
+## 1     4 Ags   Agua…     1 0799      4    14 &quot; Mu… 2 [ No] 3 [ Se… -1           9
+## 2     7 Ags   Agua…     1 0799      2    17 &quot; Mu… 1 [ Si] 5 [ Ba…  3 [ De…    11
+## 3   203 Ags   Agua…     1 0799      1    21 &quot; Ho… 1 [ Si] 4 [ Pr…  3 [ De…    10
+## 4   217 Ags   Agua…     1 0799      1    16 &quot; Ho… 1 [ Si] 4 [ Pr…  3 [ De…    16
+## # … with 115 more variables: f20m &lt;dbl&gt;, f21 &lt;dbl+lbl&gt;, p1 &lt;dbl+lbl&gt;,
+## #   p2m &lt;dbl+lbl&gt;, p2a &lt;dbl+lbl&gt;, p4 &lt;dbl+lbl&gt;, p5 &lt;dbl&gt;, p6 &lt;fct&gt;, p7 &lt;fct&gt;,
+## #   p8 &lt;dbl+lbl&gt;, p9_1 &lt;fct&gt;, p9_2 &lt;fct&gt;, p9_3 &lt;fct&gt;, p9_4 &lt;fct&gt;, p9_5 &lt;fct&gt;,
+## #   p9_6 &lt;fct&gt;, p9_7 &lt;fct&gt;, p9_8 &lt;fct&gt;, p9_9 &lt;fct&gt;, p9_10 &lt;fct&gt;, p9_11 &lt;fct&gt;,
+## #   p9_12 &lt;fct&gt;, p9ot &lt;dbl+lbl&gt;, p11_1 &lt;dbl+lbl&gt;, p11_2 &lt;dbl+lbl&gt;,
+## #   p11_3 &lt;dbl+lbl&gt;, p12_1 &lt;fct&gt;, p12_2 &lt;fct&gt;, p12_3 &lt;fct&gt;, p12_4 &lt;fct&gt;,
+## #   p12_5 &lt;fct&gt;, p12_6 &lt;fct&gt;, p12_7 &lt;fct&gt;, p12_8 &lt;fct&gt;, p12_9 &lt;fct&gt;, …</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="carga-de-datos.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(encuesta<span class="sc">$</span>ins)</span></code></pre></div>
 <pre><code>## [1] &quot;haven_labelled&quot; &quot;vctrs_vctr&quot;     &quot;double&quot;</code></pre>
-<p>A continuaciónse correrán los Script de <strong>R</strong> diseñados colocar los nombres de los estads y los municipios.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="carga-de-datos.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;clave_edo_mun.R&quot;</span>)</span></code></pre></div>
-<p>El siguiente Script cambia todas las variables <em>havel_labelled</em> a <em>factor</em>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="carga-de-datos.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;clave_preg.R&quot;</span>)</span></code></pre></div>
+<p>Observamos que algunos valores venían vacíos por eso usamos la siguiente fórmula para imputar el promedio a 3 variables seleccionadas.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="carga-de-datos.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imputar promedio en variables numéricas</span></span>
+<span id="cb6-2"><a href="carga-de-datos.html#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="carga-de-datos.html#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="carga-de-datos.html#cb6-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate_at</span>(<span class="fu">vars</span>(p5,p10,p15),</span>
+<span id="cb6-5"><a href="carga-de-datos.html#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">funs</span>(<span class="fu">ifelse</span>(<span class="fu">is.na</span>(.), <span class="fu">round</span>(<span class="fu">mean</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">1</span>), .)))</span></code></pre></div>
 
 </div>
             </section>
@@ -259,6 +261,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
