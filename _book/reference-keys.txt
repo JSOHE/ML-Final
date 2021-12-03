@@ -1,6 +1,7 @@
-tab:unnamed-chunk-6
+tab:unnamed-chunk-8
 introducción
 carga-de-datos
+renombrar-las-variables.
 estadísticos-descriptivos-del-abandono-escolar
 limpieza-exploración-y-análisis-conceptual
 resumen-general
@@ -13,4 +14,4 @@ con-quien-vives-p12_1p12_10
 qué-tanto-asistias-a-tus-clases
 preprocesamiento-e-ingenieria-de-entradas
 preparar-solución
-no-sé-como-hacer-esto
+interpretación-del-modelo

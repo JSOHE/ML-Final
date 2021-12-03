@@ -135,9 +135,9 @@ entrena %>% select(p6, desertor) %>% filter(p6 == ' Pública' | p6 == ' Privada'
 La distancia **NO** parece ser un factor importante. Para que vayan o no a la escuela, independientemente del sexo.
 
 ```{r}
-entrena %>% select(sexo, desertor, p10, ) %>% group_by(sexo, desertor) %>%
+entrena %>% select(sexo, desertor, p10) %>% group_by(sexo, desertor) %>%
   ggplot(aes(p10, sexo, fill = desertor)) + 
-  geom_boxplot() + ggtilte("Minutos que tarda en llegar a la escuela")
+  geom_boxplot() + ggtitle("Minutos que tarda en llegar a la escuela")
 ```
 
 #### ¿Con quien vives? (P12_1:P12_10)

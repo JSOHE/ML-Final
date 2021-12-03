@@ -24,7 +24,7 @@
 <meta name="author" content="Valeria &amp; Juan Carlos" />
 
 
-<meta name="date" content="2021-12-01" />
+<meta name="date" content="2021-12-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,7 +135,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="summary">
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
 <li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
-<li class="chapter" data-level="2" data-path="carga-de-datos.html"><a href="carga-de-datos.html"><i class="fa fa-check"></i><b>2</b> Carga de Datos</a></li>
+<li class="chapter" data-level="2" data-path="carga-de-datos.html"><a href="carga-de-datos.html"><i class="fa fa-check"></i><b>2</b> Carga de Datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carga-de-datos.html"><a href="carga-de-datos.html#renombrar-las-variables."><i class="fa fa-check"></i><b>2.1</b> Renombrar las variables.</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html"><i class="fa fa-check"></i><b>3</b> Estadísticos descriptivos del Abandono Escolar</a>
 <ul>
 <li class="chapter" data-level="3.0.1" data-path="estadísticos-descriptivos-del-abandono-escolar.html"><a href="estadísticos-descriptivos-del-abandono-escolar.html#limpieza-exploración-y-análisis-conceptual"><i class="fa fa-check"></i><b>3.0.1</b> Limpieza, exploración y análisis conceptual</a></li>
@@ -148,7 +151,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="4.0.1" data-path="preprocesamiento-e-ingenieria-de-entradas.html"><a href="preprocesamiento-e-ingenieria-de-entradas.html#preparar-solución"><i class="fa fa-check"></i><b>4.0.1</b> Preparar solución</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="no-sé-como-hacer-esto.html"><a href="no-sé-como-hacer-esto.html"><i class="fa fa-check"></i><b>5</b> NO sé como hacer esto</a></li>
+<li class="chapter" data-level="5" data-path="interpretación-del-modelo.html"><a href="interpretación-del-modelo.html"><i class="fa fa-check"></i><b>5</b> Interpretación del Modelo</a></li>
 </ul>
 
       </nav>
@@ -197,9 +200,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="carga-de-datos.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imputar promedio en variables numéricas</span></span>
 <span id="cb6-2"><a href="carga-de-datos.html#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="carga-de-datos.html#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="carga-de-datos.html#cb6-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate_at</span>(<span class="fu">vars</span>(p5,p10,p15),</span>
-<span id="cb6-5"><a href="carga-de-datos.html#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">funs</span>(<span class="fu">ifelse</span>(<span class="fu">is.na</span>(.), <span class="fu">round</span>(<span class="fu">mean</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">1</span>), .)))</span></code></pre></div>
+<span id="cb6-4"><a href="carga-de-datos.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate_at(vars(p5,p10,p15),</span></span>
+<span id="cb6-5"><a href="carga-de-datos.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#      funs(ifelse(is.na(.), round(mean(., na.rm = TRUE),1), .)))</span></span></code></pre></div>
+<div id="renombrar-las-variables." class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Renombrar las variables.</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="carga-de-datos.html#cb7-1" aria-hidden="true" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span> <span class="fu">select</span>(p39) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(p39)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="1440" /></p>
 
+</div>
 </div>
             </section>
 
