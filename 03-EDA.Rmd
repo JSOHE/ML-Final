@@ -32,11 +32,11 @@ encuesta_part_val$splits
 
 ```
 
-### Limpieza, exploración y análisis conceptual
+## Limpieza, exploración y análisis conceptual
 
 Primero vamos a establecer que la variable desertor es la que estamos buscando, esta toma dos valores, 1 si el estudiante desertó y 0 si no lo hizo.
 
-Podemos observar que se cuenta con 32% de desertores y 68% no desertores en la encuesta.
+Podemos observar que se cuenta con $32%$ de desertores y $68%$ no desertores en la encuesta.
  
 
 ```{r}
@@ -47,7 +47,7 @@ entrena%>% count(desertor) %>%
   mutate(pcn = round(n / sum(n),2))
 ```
 
-### Resumen general
+## Resumen general
 
 ```{r}
 library(skimr)

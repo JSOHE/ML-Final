@@ -36,7 +36,9 @@ Observamos que algunos valores venían vacíos por eso usamos la siguiente fórm
 ```
 ## Renombrar las variables.
 
-```{r, include=FALSE}
+Se cambia el nombre de las variables para darles más significado.
+
+```{r}
 
 rename(encuesta, 
        folio                   =  folio,
@@ -169,7 +171,5 @@ rename(encuesta,
                          
 ```
 
-```{r}
-encuesta %>% select(p39) %>% ggplot(aes(p39)) + geom_boxplot()
-```
+
 
