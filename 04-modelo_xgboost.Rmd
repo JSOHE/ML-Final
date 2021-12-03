@@ -8,7 +8,6 @@ categorización de entradas, transformaciones no lineales):
 ```{r}
 receta <-   recipe(desertor ~ edo +
                               muni +  
-                              edad + 
                               sexo + 
                               p5 + 
                               p6 +   
@@ -28,6 +27,7 @@ receta <-   recipe(desertor ~ edo +
                               p40_1 + p40_2 + p40_3 + p40_4 + p40_5 + p40_6 + p40_7 + p40_8 + p40_9 + p40_10 + p40_11 + p40_12 + p40_13 + p40_14 + p40_15 +  
                               p41a + p41b + p41c + p41d + p41e + p41f+ p41g + p41h + p41i,
                        data = entrena) %>%
+  step_interact( ~ p12_1:p12_10)%>%
   step_dummy(all_nominal_predictors()) %>%
   step_zv(all_predictors()) #step_zv  remove variables that contain only a single value.
 ```
@@ -62,8 +62,8 @@ ggplot(ajuste_xgboost, aes(x=iter, y = training_logloss)) + geom_line()
 
 ```{r}
 valida <- testing(encuesta_part_val$splits[[1]])
-preds_val <- predict(flujo_fit, valida, type = "prob") |> 
-  bind_cols(valida |> select(desertor))
+preds_val <- predict(flujo_fit, valida, type = "prob") %>% 
+  bind_cols(valida %>% select(desertor))
 ```
 
 
@@ -72,13 +72,13 @@ mis_metricas <- metric_set(mn_log_loss, roc_auc)
 mis_metricas(preds_val, truth = factor(desertor), .estimate = .pred_desertor, event_level = "first")
 ```
 
-```{r}
+```{r paged.print=TRUE}
 preds_entrena <- predict(flujo_fit, entrena, type = "prob") %>% 
   bind_cols(entrena %>% select(desertor))
 ```
 
 
-```{r}
+```{r paged.print=FALSE}
 mis_metricas <- metric_set(mn_log_loss, roc_auc)
 mis_metricas(preds_entrena, truth = factor(desertor), .estimate = .pred_desertor, event_level = "first")
 ```
@@ -90,27 +90,36 @@ ggplot(preds_val, aes(x = .pred_desertor, fill = factor(desertor))) +
 
 
 ### Preparar solución
-# NO sé como hacer esto
+La siguiente es la solución al problema que estamos planteando.
 
 
 ```{r}
 encuesta_test  <-  testing(encuesta_part_inicial)
 
 preds_prueba_sol <- predict(flujo_fit, encuesta_test, type="prob") %>% 
-  bind_cols(encuesta_test %>% select(desertor)) %>%
-  select(desertor, prob = .pred_desertor)
-  
-### No sale
-#mis_metricas(preds_prueba_sol, truth = factor(desertor), .estimate = #.pred_desertor, event_level = "first")
+  bind_cols(encuesta_test %>% select(desertor)) 
+ 
+mis_metricas <- metric_set(mn_log_loss, roc_auc)
+mis_metricas(preds_prueba_sol, truth = factor(desertor), .estimate = .pred_desertor, event_level = "first") 
+
+
 ```
+
+
+
+
 
 **Resultados**:
 
-1. Esto modelo logra un score de 0.385
-2. Afina para llegar a 0.375, que fue el score ganador del concurso.
+1. Esto modelo logra un score de **$0.125$**
+2. Una curva ROC de **$0.984$**.
 
 
 ```{r}
+roc_graf <- roc_curve(preds_prueba_sol, truth = factor(desertor), .pred_desertor,event_level = "first")
 
+autoplot(roc_graf)
 ```
+
+
 

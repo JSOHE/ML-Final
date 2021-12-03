@@ -137,7 +137,7 @@ La distancia **NO** parece ser un factor importante. Para que vayan o no a la es
 ```{r}
 entrena %>% select(sexo, desertor, p10, ) %>% group_by(sexo, desertor) %>%
   ggplot(aes(p10, sexo, fill = desertor)) + 
-  geom_boxplot()
+  geom_boxplot() + ggtilte("Minutos que tarda en llegar a la escuela")
 ```
 
 #### ¿Con quien vives? (P12_1:P12_10)
@@ -178,8 +178,6 @@ entrena %>% select(sexo, p12_9, desertor) %>%
 #### ¿Qué tanto asistias a tus clases?
 
 ```{r}
-
-
 tabla_univariada(entrena, p14, desertor) %>% 
   ggplot(aes(p14, pcn, fill = desertor)) + 
   geom_col(position = "dodge") +  ggtitle("¿Qué tanto faltabas a clase?") +
