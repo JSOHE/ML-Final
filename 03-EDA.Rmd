@@ -2,33 +2,31 @@
 
 Empezaremos este ejercicio dividiendo nuestra encuesta, en dos set de datos uno para el entrenamiento y otro para la prueba, por ese motivo decidimos separa la base usando un muestreo estratificado debido a que las muestra no es balanceada.
 
-Decidimos guardar **20%** como datos de prueba, siendo **2,464** y usar el restante **9,853** como datos de entrenamiento, de estos usar el **20%** de los datos de entrenamiento para hacer validación, quedando como sigue:
+De una muestra total de $8,136$ encuestados, decidimos guardar $20\%$ como datos de prueba, siendo $1,628$ y usar el restante $80\%$ ($6,508$)  como datos de entrenamiento, a su vez, separar el 20% de los datos de entrenamiento para usarlos como datos de validación $1,302$.
 
 |Division|Total|Porcentaje|
 |---|---|---|
-|Prueba|2,464|20%|
-|Entrenamiento|9,853|80%|
-|Total|12,317|100%|
+|Prueba|1,628|20%|
+|Entrenamiento|6,508|80%|
+|Total|8,136|100%|
 
 Posteriormente la muestra de entrenamiento se subdivide, para crear espacio para la muestra de validación.
 
 |Division|Total|Porcentaje|
 |---|---|---|
-|Entrenamiento|7,882|80%|
-|Validación |1,971|20%|
-|Total |9,853|100%|
-<7882/1971/9853>
+|Entrenamiento|5,206|80%|
+|Validación |1,302|20%|
+|Total |6,508|100%|
+
 
 
 ```{r}
 set.seed(2021)
 
-
 encuesta_part_inicial <- initial_split(encuesta, strata = desertor, prop = 0.80)
 encuesta_total <- training(encuesta_part_inicial)
 encuesta_part_val <- validation_split(encuesta_total, prop = 0.80)
 encuesta_part_val$splits
-
 
 ```
 
@@ -36,7 +34,7 @@ encuesta_part_val$splits
 
 Primero vamos a establecer que la variable desertor es la que estamos buscando, esta toma dos valores, 1 si el estudiante desertó y 0 si no lo hizo.
 
-Podemos observar que se cuenta con $32%$ de desertores y $68%$ no desertores en la encuesta.
+Podemos observar que se cuenta con $42%$ de desertores y $58%$ no desertores en la encuesta.
  
 
 ```{r}
@@ -45,6 +43,11 @@ entrena <- training(encuesta_part_val$splits[[1]])
 nrow(entrena)
 entrena%>% count(desertor) %>%
   mutate(pcn = round(n / sum(n),2))
+
+
+tabla_univariada <- function(datos, variable, target){
+  datos %>% count({{ variable }}, {{ target }}) %>% group_by({{ variable }}) %>% 
+  mutate(pcn = round(n / sum(n),2)) }
 ```
 
 ## Resumen general
@@ -56,6 +59,85 @@ skim(entrena)
 
 ```
 
+##  Variables claramente importantes (hipótesis):
+
+
+edo: en el que vive                    
+sexo: hombre, mujer                   
+prom_sec: promedio secundaria               
+sec_publica: la secundaria a la que asistio fue publica o no            
+cambio_esc: Cuantas veces se cambió de secundaria         asistencia: Qué tanto asistía a la escuela             
+reprueba: Qué tanto reprobaba en el bachillerato          prom_bach: Cuál fue su promedio en bachillerato           becado: Si estaba becado en el bachillerato                
+desertor_amigos: Si tenia amigos que desertaron.       
+desertor_hermanos: Si sus hermanos desertaron     
+faltaba_dinero         
+prob_turno             
+baja_reprueba          
+disg_estudiar          
+indisciplina           
+mejor_trabaja          
+no_entiende            
+esc_lejos              
+cambio_casa            
+bulling                
+disciplina_estricta    
+discriminado           
+prob_familia           
+te_casate              
+estudiaran_hermanos    
+inseguridad            
+fallecio_familiar      
+embarazo               
+malas_instalaciones    
+querias_cambiar_escuela
+estudiar_no_sirve      
+baja_autoestima        
+motivo_otro            
+trab_est               
+ncuartos               
+tele                   
+dvd                    
+refri                  
+estufa                 
+piso_tierra            
+lavadora               
+auto                   
+microondas             
+computadora            
+agua                   
+telefono               
+internet               
+excusado               
+letrina                
+cable                  
+id                     
+desertor               
+tipo_escuela           
+vive_con               
+confia_esc             
+confia_familia         
+confia_amigos          
+tabaco                 
+alcohol                
+marihuana              
+otras_drogas   
+
+
+----
+
+### ¿Influye la entidad federativa en al que vive?
+
+Podemos observar que etadoe como Ags, BC e Hgo, Tamps, Gro, Q. Roo, Yuc y Zac tienen porcentaje de deserción mayor al 53%. Siendo Ags la entidad com mayor deserción del país.
+
+```{r}
+tabla_univariada(entrena, edo, desertor) %>%   
+   ggplot(aes(edo, pcn, fill = desertor)) + 
+  geom_col(position = "stack") +  ggtitle("¿Deserciones por entidad?") +
+  theme(axis.text.x = element_text(angle = 90))
+
+tabla_univariada(entrena, edo, desertor) %>% filter(desertor == "desertor" & pcn >= .53) %>% arrange(desc(pcn))
+```
+           
 ### ¿El género influye?
 
 En la siguiente tabla puede ver que parecen ser números muy similares, es decir, se observa que mientras el $43\%$ de los hombres desertan, el $41\%$ de las mujeres lo hacen.
@@ -67,29 +149,16 @@ entrena %>% select(sexo, desertor) %>%
   group_by(sexo, desertor) %>% 
   tally() %>% mutate(pcn = round(n/sum(n),2))
 
-```
+```                   
 
 
-##  Variables claramente importantes (hipótesis):
-
-
-- Sexo 
-- Promedio en la secundaria (p5)
-- Tipo de secundaria a la que asistió (p6)
-- Te cambiaste de escuela (p7)
-- En qué tipo de institución estudiaste (p8)
-- Cuanto tiempo haces a la escuela (p10)
-- ¿Con quien vives? (P12_1:P12_10)
-- ¿Que tanto asistes a tus clases? (p14)
-- Tener hijos
-- Consumo de Drogas
 
 ### Promedio Secundaria
 
+Al parecer las personas con un promedio superior a $8$ en la secundaria tienen $50\%$ de posibilidades de no desertar en el bachillerato.
+
 ```{r}
-tabla_univariada <- function(datos, variable, target){
-  datos %>% count({{ variable }}, {{ target }}) %>% group_by({{ variable }}) %>% 
-  mutate(pcn = round(n / sum(n),2)) }
+
 
 tabla_univariada(entrena, prom_sec, desertor) %>%
   ggplot(aes(prom_sec, pcn, fill = desertor)) + 
@@ -100,6 +169,8 @@ entrena %>% select(sexo, desertor,   prom_sec ) %>% group_by(sexo, desertor) %>%
   ggplot(aes(prom_sec, sexo, fill = desertor)) + 
   geom_boxplot() + ggtitle("Promedio Secundaria")
 ```
+
+
 ### Pública o Privada
 
 Se observa que si la educación es privada la probabilidad de deserción es $36\%$, mientras que si es pública es $42\%$.
@@ -111,6 +182,122 @@ tabla_univariada(entrena, sec_publica, desertor) %>%
   geom_col(position = "dodge") + ggtitle("Tipo de Secundaria a la que asistió")
 ```
 
+
+### Cuántas veces cambiaste de preparatoria
+
+```{r}
+tabla_univariada(entrena, cambio_esc, desertor) %>%
+  ggplot(aes(cambio_esc, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("Número de veces que cambiaste de prepa") + xlab("")
+```
+
+
+#### ¿Qué tanto asistias a tus clases?
+
+Esta variabble es relevante porque muestra un gran cambio en la posibilida de desertar disminuye a medida que aumenta la asitencia a la preparatoria.
+
+```{r}
+tabla_univariada(entrena, asistencia, desertor) %>% 
+  ggplot(aes(asistencia, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("¿Qué tanto faltabas a clase?") +
+  scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 2), 
+                     labels = function(x) stringr::str_wrap(x, width = 20)) + xlab("")
+
+```
+     
+### ¿Reprobaste alguna materia en la prepa?   
+
+Si reprobaste aunque sea una materia tienes el $50\%$ de posibilidades de desertar.
+     
+```{r}
+tabla_univariada(entrena, reprueba, desertor) %>% 
+  ggplot(aes(reprueba, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("¿Reprobaste alguna materia?") +
+  scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 2), 
+                     labels = function(x) stringr::str_wrap(x, width = 20)) + xlab("")
+```
+            
+
+
+### ¿Cómo consideras que era tu promedio cuando estabas en bachillerato?
+
+Este es un indicador importante, qeu indica que si el joiven considera que tiene un  promedio muy bajo existe el $80\%$ de probailidad de que se de de baja.
+
+```{r}
+
+tabla_univariada(entrena, prom_bach, desertor) %>% 
+  ggplot(aes(prom_bach, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("¿Como consideras que era tu promedio?") +
+  scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 2), 
+                     labels = function(x) stringr::str_wrap(x, width = 10)) + xlab("")
+```
+
+
+### ¿Influye la beca?
+
+Si estabas becado era muy probable que $73\%$ que no desertaras, comparado con el $55\%$ si no tenías beca.
+
+```{r}
+
+tabla_univariada(entrena, becado, desertor) %>% 
+  ggplot(aes(becado, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("¿Estabas becado?") +
+  scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 2), 
+                     labels = function(x) stringr::str_wrap(x, width = 10)) + xlab("")
+```
+ 
+### ¿Tuviste amigos o hermanos que desertaron? 
+
+La variable más importante es si tuviste hermanos que desertaron ya que tu probabilidad de desertar es del $56\%$ en cambio si tienes hermanos que desertaron tu probabilida de desertar es del $44\%$.
+
+
+```{r}
+tabla_univariada(entrena, desertor_amigos, desertor)
+tabla_univariada(entrena, desertor_hermanos, desertor)
+```
+
+
+### Ahora tenemos una serie de variables en las que preguntan sobre la situación en su casa
+
+A continuación veremos las siguientes variables:
+faltaba_dinero         prob_turno               baja_reprueba          
+disg_estudiar          indisciplina             mejor_trabaja          
+no_entiende            esc_lejos                cambio_casa            
+bulling                disciplina_estricta      discriminado           
+prob_familia           te_casate                estudiaran_hermanos    
+inseguridad            fallecio_familiar        embarazo               
+malas_instalaciones    querias_cambiar_escuela  estudiar_no_sirve      
+baja_autoestima        motivo_otro     
+
+
+
+```{r}
+
+tabla_univariada(entrena, faltaba_dinero, desertor)
+tabla_univariada(entrena, prob_turno, desertor)
+tabla_univariada(entrena, disg_estudiar, desertor)
+tabla_univariada(entrena, mejor_trabaja, desertor)
+tabla_univariada(entrena, no_entiende, desertor)
+tabla_univariada(entrena, esc_lejos, desertor)
+tabla_univariada(entrena, cambio_casa, desertor)
+tabla_univariada(entrena, bulling, desertor)
+tabla_univariada(entrena, disciplina_estricta, desertor)
+tabla_univariada(entrena, discriminado, desertor)
+tabla_univariada(entrena, prob_familia, desertor)
+tabla_univariada(entrena, te_casaste, desertor)
+tabla_univariada(entrena, estudiaran_hermanos, desertor)
+tabla_univariada(entrena, inseguridad, desertor)
+tabla_univariada(entrena, fallecio_familiar, desertor)
+tabla_univariada(entrena, embarazo, desertor)
+tabla_univariada(entrena, malas_instalaciones, desertor)
+tabla_univariada(entrena, querias_cambiar_escuela, desertor)
+tabla_univariada(entrena,estudiar_no_sirve, desertor)
+tabla_univariada(entrena, baja_autoestima, desertor)
+tabla_univariada(entrena, motivo_otro, desertor)
+
+```
+
+    
 
 
 #### ¿Con quien vives? (P12_1:P12_10)
@@ -148,23 +335,8 @@ entrena %>% select(sexo, p12_9, desertor) %>%
   geom_col(position = "dodge") +  ggtitle("Hombre: ¿Vives con tus hijos?")
 ```
 
-#### ¿Qué tanto asistias a tus clases?
 
-```{r}
-tabla_univariada(entrena, asistencia, desertor) %>% 
-  ggplot(aes(asistencia, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") +  ggtitle("¿Qué tanto faltabas a clase?") +
-  scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 2), 
-                     labels = function(x) stringr::str_wrap(x, width = 20)) + xlab("")
 
-```
-
-```{r}
-tabla_univariada(entrena, edo, desertor) %>%   
-   ggplot(aes(edo, pcn, fill = desertor) + 
-  geom_col(position = "stack") +  ggtitle("¿Deserciones por entidad?") +
-  theme(axis.text.x = element_text(angle = 90))
-```
 
 
 
