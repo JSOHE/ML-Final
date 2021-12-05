@@ -9,135 +9,71 @@ Lo primero que se tuvo que hacer fue modificar la encuesta ya que su unidad bás
 Al hacer esto nos encotramos con una base de **12,317** adolescentes que fueron entrevistados (diferentes a las 13,014 viviendas en las que se habia aplicado la encuesta)
 
 ```{r}
-# Es importante que se habra con el encoding porque corrige los acentos.
+
+#encuesta <- read_dta("./Data/basefinal.dta") 
+#
+#source("recodifica.R")
+
+#saveRDS(encuesta, "./Data/encuesta.rds")
+
 encuesta <- readRDS("./Data/encuesta.rds")
 ```
 
 Una vez cargada la encuesta, encontramos que no estaba codificada por ello, tomamos todos los datos y construimos los factores, haciendo más manejable la encuesta, cabe señalar que esta parte del trabajo tomó mucho tiempo ya que se codificaron las variables a factores.
 
-Como puede ver a continuación algunos de los nombres de las columnas eran de clase *"haven_labelled"* por esta razón se procedió a cambiarlos a factor junto con otras, 114 variables.
+La siguiente es una base filtrada con todos los jóvenes que se entrevistaron y tienen entre 18 y 24 años, edad en la que ya deberían haber terminado la educación media superior.
 
 ```{r}
-head(encuesta,4)
-
-class(encuesta$ins)
+head(encuesta,4) 
 
 ```
 
-Observamos que algunos valores venían vacíos por eso usamos la siguiente fórmula para imputar el promedio a 3 variables seleccionadas.
 
-```{r, eval=FALSE}
-# Imputar promedio en variables numéricas
-
-
-#   mutate_at(vars(p5,p10,p15),
-#      funs(ifelse(is.na(.), round(mean(., na.rm = TRUE),1), .)))
-  
-```
 ## Renombrar las variables.
 
 Se cambia el nombre de las variables para darles más significado.
 
 ```{r}
 
-rename(encuesta, 
-       folio                   =  folio,
+encuesta <- rename(encuesta, 
        edo                     =  edo,
-       muni                    =  muni,
-       loc                     =  loca,
-       ageb                    =  ageb,
-       f7                      =  f7,
        edad                    =  edad,
        sexo                    =  sexo,
-       ins                     =  ins,       
-       ultimo                  =  ultimo,   
-       actual                  =  actual,    
-       hora_entrevista         =  f20h,     
-       min_entrevista          =  f20m,      
-       f21                     =  f21,      
-       opciones_que_cursaste   =  p1,        
-       mes_entraste            =  p2m,      
-       ao_entraste             =  p2a,       
-       puntaje_examen_sec      =  p4,       
-       prom_sec                =  p5,        
-       tipo_sec                =  p6,       
-       cambiaste_esc           =  p7,        
-       motivo_cambio_casa      =  p8,       
-       conalep                 =  p9_1,      
-       cetis                   =  p9_2,     
-       colegio                 =  p9_3,      
-       prepa_pub               =  p9_4,     
-       emsad                   =  p9_5,      
-       vocacional              =  p9_6,     
-       cbta                    =  p9_7,      
-       cetmar                  =  p9_8,     
-       bac_estatal             =  p9_9,      
-       abierta                 =  p9_10,    
-       privada                 =  p9_11,     
-       otra_inst               =  p9_12,    
-       p9ot                    =  p9ot,      
-       elige_primera           =  p11_1,    
-       elige_segunda           =  p11_2,     
-       elige_tercera           =  p11_3,    
-       v_solo                  =  p12_1,     
-       v_mama                  =  p12_2,    
-       v_papa                  =  p12_3,     
-       v_madra_padra           =  p12_4,    
-       v_hermanos              =  p12_5,     
-       v_familiares            =  p12_6,    
-       v_amigos                =  p12_7,     
-       v_hijos                 =  p12_8,    
-       v_pareja                =  p12_9,     
-       v_otros                 =  p12_10,   
-       v_cuantos_hermanos      =  p12_5cts,  
-       v_cuantos_familiares    =  p12_6cts, 
-       v_cuantos_amigos        =  p12_7cts,  
-       v_cuantos_hijos         =  p12_8cts, 
-       v_cuantos_otros         =  p12_10ts,  
-       p_directores            =  p13_1,    
-       p_maestros              =  p13_2,     
-       p_prefecto              =  p13_3,    
-       p_papa                  =  p13_4,     
-       p_mama                  =  p13_5,    
-       p_amigo                 =  p13_6,     
-       p_hermanos              =  p13_7,    
-       asistencia              =  p14,       
-       prom_prepa              =  p15,      
-       reprueba                =  p16,       
-       desempeño_promedio      =  p17,      
-       beca                    =  p18,       
-       beca_inst               =  p19,      
-       dejado_amigos           =  p23_1, 
-       dejado_hermanos         =  p23_2,        
-       dejado_cuantos_amigos   =  p23_1cts, 
-       dejado_cuantos_hermanos =  p23_2cts,  
-       faltaba_dinero          =  p25_1,    
-       prob_turno              =  p25_2,     
-       baja_reprueba           =  p25_3,    
-       disg_estudiar           =  p25_4,     
-       indisciplina            =  p25_5,    
-       mejor_trabaja           =  p25_6,     
-       no_entiende             =  p25_7, 
-       esc_lejos               =  p25_8,     
-       cambio_casa             =  p25_9,    
-       bulling                 =  p25_10,    
-       disciplina_estricta     =  p25_11,   
-       discriminado            =  p25_12,    
-       prob_familia            =  p25_13,   
-       te_casate               =  p25_14,    
-       estudiaran_hermanos     =  p25_15,   
-       inseguridad             =  p25_16,    
-       fallecio_familiar       =  p25_17,   
-       embarazo                =  p25_18,    
-       malas_instalaciones     =  p25_19,   
-       querias_cambiar_escuela =  p25_20,    
-       estudiar_no_sirve       =  p25_21,   
-       baja_autoestima         =  p25_22,    
-       motivo_otro             =  p25_23,   
-       trabajaste              =  p27,       
-       tiempo_trabaja_estudia  =  p29,      
-       salario_mes             =  p30,       
-       cuantos_cuartos         =  p39,      
+       prom_sec                =  prom_sec,
+       sec_publica             =  secpublica,
+       cambio_esc              =  camboesc,
+       asistencia              =  freqasis,
+       p15                     =  prom_ems,
+       reprueba                =  reprueba,
+       prom_bach               =  nivelprom,
+       becado                  =  becado,
+       desertor_amigos         =  p23_1, 
+       desertor_hermanos       =  p23_2,            
+       faltaba_dinero          =  p24_1,    
+       prob_turno              =  p24_2,     
+       baja_reprueba           =  p24_3,    
+       disg_estudiar           =  p24_4,     
+       indisciplina            =  p24_5,    
+       mejor_trabaja           =  p24_6,     
+       no_entiende             =  p24_7, 
+       esc_lejos               =  p24_8,     
+       cambio_casa             =  p24_9,    
+       bulling                 =  p24_10,    
+       disciplina_estricta     =  p24_11,   
+       discriminado            =  p24_12,    
+       prob_familia            =  p24_13,   
+       te_casate               =  p24_14,    
+       estudiaran_hermanos     =  p24_15,   
+       inseguridad             =  p24_16,    
+       fallecio_familiar       =  p24_17,   
+       embarazo                =  p24_18,    
+       malas_instalaciones     =  p24_19,   
+       querias_cambiar_escuela =  p24_20,    
+       estudiar_no_sirve       =  p24_21,   
+       baja_autoestima         =  p24_22,    
+       motivo_otro             =  p24_23,        
+       trab_est                =  trab_est,
+       ncuartos                =  ncuartos,
        tele                    =  p40_1,        
        dvd                     =  p40_2,    
        refri                   =  p40_3,     
@@ -152,24 +88,26 @@ rename(encuesta,
        internet                =  p40_12,   
        excusado                =  p40_13,    
        letrina                 =  p40_14,   
-       cable                   =  p40_15,    
-       tabaco                  =  p41a,     
-       alcohol                 =  p41b,      
-       marihuana               =  p41c,     
-       cocaina                 =  p41d,      
-       heroina                 =  p41e,     
-       inhalantes              =  p41f,      
-       tranquilizante          =  p41g,     
-       anfetaminas             =  p41h,      
-       alucinogenos            =  p41i,     
-       id                      =  id,        
-       desertor                =  desertor, 
-       cedo                    =  cedo,      
-       cmuni                   =  cmuni,    
-       cedo_muni               =  cedo_muni, 
-       minutos_tarda           =  p10)      
-                         
+       cable                   =  p40_15,       
+       id                      =  id,
+       desertor                =  desertor,
+       tipo_escuela            =  tipoescuela,
+       vive_con                =  pervivia,
+       confia_esc              =  p13_esc,
+       confia_familia          =  p13_fami,
+       confia_amigos           =  p13_amg,
+       tabaco                  =  tabaco,   
+       alcohol                 =  alcohol,      
+       marihuana               =  marihuana,     
+       otras_drogas            =  otrasdrog)    
+
 ```
 
 
+Después de una segunda revisión se decidieron quitar las siguientes variables:
+
+```{r}
+encuesta <- encuesta %>% 
+  select(-p15,-baja_reprueba, -indisciplina, -id)
+```
 

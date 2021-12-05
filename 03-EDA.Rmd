@@ -58,7 +58,7 @@ skim(entrena)
 
 ### ¿El género influye?
 
-En la siguiente tabla puede ver que parecen ser números muy similares, es decir, se observa que mientras el 33% de los hombres desertan, el 31% de las mujeres lo hacen.
+En la siguiente tabla puede ver que parecen ser números muy similares, es decir, se observa que mientras el $43\%$ de los hombres desertan, el $41\%$ de las mujeres lo hacen.
 
 Incluso pensaría que el porcentaje de mujeres que sería superior pero los datos indican lo cotrario, la tasa de deserción de mujeres es ligeramente menor que la de los hombres.
 
@@ -69,26 +69,6 @@ entrena %>% select(sexo, desertor) %>%
 
 ```
 
-
-### Entendiendo la Edad
-
-Se puede observar un aumento de la deserción conforme aumenta la edad. Esto es comprenseible, porque conforme pasan los años, las personas tienen menos oportunidades de regresar a continuar con sus estudios.
-
-```{r}
-entrena %>% select(edad, desertor) %>% 
-  group_by(edad, desertor) %>% 
-  tally() %>% mutate(pcn = round(n/sum(n),2)) %>%
-  ggplot(aes(factor(edad), pcn, fill = desertor)) + 
-  geom_col(position = "dodge") + scale_y_continuous(labels = scales::percent_format())
-
-
-
-datos_entrena <- entrena %>% select(edad, desertor) %>% 
-  group_by(edad, desertor) %>% 
-  tally() %>% mutate(pcn = round(n/sum(n),2)) 
-
-
-```
 
 ##  Variables claramente importantes (hipótesis):
 
@@ -104,41 +84,34 @@ datos_entrena <- entrena %>% select(edad, desertor) %>%
 - Tener hijos
 - Consumo de Drogas
 
-#### Promedio Secundaria
+### Promedio Secundaria
 
 ```{r}
 tabla_univariada <- function(datos, variable, target){
   datos %>% count({{ variable }}, {{ target }}) %>% group_by({{ variable }}) %>% 
-  mutate(prop = n / sum(n)) %>% mutate(pcn = round(prop, 2)) }
+  mutate(pcn = round(n / sum(n),2)) }
 
-tabla_univariada(entrena, p5, desertor) %>%
-  ggplot(aes(p5, pcn, fill = desertor)) + 
+tabla_univariada(entrena, prom_sec, desertor) %>%
+  ggplot(aes(prom_sec, pcn, fill = desertor)) + 
   geom_col(position = "dodge") + ggtitle("Promedio Secundaria")
 
 
-entrena %>% select(sexo, desertor, p5) %>% group_by(sexo, desertor) %>%
-  ggplot(aes(p5, sexo, fill = desertor)) + 
+entrena %>% select(sexo, desertor,   prom_sec ) %>% group_by(sexo, desertor) %>%
+  ggplot(aes(prom_sec, sexo, fill = desertor)) + 
   geom_boxplot() + ggtitle("Promedio Secundaria")
 ```
-#### Pública o Privada
-Se observa que si la educación es privada la probabilidad de deserción es $18\%$, mientras que si es pública es $33\%$.
+### Pública o Privada
+
+Se observa que si la educación es privada la probabilidad de deserción es $36\%$, mientras que si es pública es $42\%$.
 
 ```{r}
 
-entrena %>% select(p6, desertor) %>% filter(p6 == ' Pública' | p6 == ' Privada') %>%
-  group_by(p6, desertor) %>% 
-  tally() %>% mutate(pcn = round(n/sum(n),2))
+tabla_univariada(entrena, sec_publica, desertor) %>%
+  ggplot(aes(sec_publica, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("Tipo de Secundaria a la que asistió")
 ```
 
-#### Cuantos minutos haces para llegar a la escuela
 
-La distancia **NO** parece ser un factor importante. Para que vayan o no a la escuela, independientemente del sexo.
-
-```{r}
-entrena %>% select(sexo, desertor, p10) %>% group_by(sexo, desertor) %>%
-  ggplot(aes(p10, sexo, fill = desertor)) + 
-  geom_boxplot() + ggtitle("Minutos que tarda en llegar a la escuela")
-```
 
 #### ¿Con quien vives? (P12_1:P12_10)
 
@@ -178,12 +151,19 @@ entrena %>% select(sexo, p12_9, desertor) %>%
 #### ¿Qué tanto asistias a tus clases?
 
 ```{r}
-tabla_univariada(entrena, p14, desertor) %>% 
-  ggplot(aes(p14, pcn, fill = desertor)) + 
+tabla_univariada(entrena, asistencia, desertor) %>% 
+  ggplot(aes(asistencia, pcn, fill = desertor)) + 
   geom_col(position = "dodge") +  ggtitle("¿Qué tanto faltabas a clase?") +
   scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 2), 
-                     labels = function(x) stringr::str_wrap(x, width = 20))
+                     labels = function(x) stringr::str_wrap(x, width = 20)) + xlab("")
 
+```
+
+```{r}
+tabla_univariada(entrena, edo, desertor) %>%   
+   ggplot(aes(edo, pcn, fill = desertor) + 
+  geom_col(position = "stack") +  ggtitle("¿Deserciones por entidad?") +
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
 
