@@ -8,7 +8,6 @@ categorización de entradas, transformaciones no lineales):
 ```{r}
 receta <-   recipe(desertor ~ 
                             edo                     +
-                            edad                    +
                             sexo                    +
                             prom_sec                +
                             sec_publica             +
@@ -24,22 +23,17 @@ receta <-   recipe(desertor ~
                             disg_estudiar           +
                             mejor_trabaja           +
                             no_entiende             +
-                            esc_lejos               +
                             cambio_casa             +
                             bulling                 +
                             disciplina_estricta     +
                             discriminado            +
                             prob_familia            +
-                            te_casate               +
+                            te_casaste              +
                             estudiaran_hermanos     +
-                            inseguridad             +
-                            fallecio_familiar       +
                             embarazo                +
-                            malas_instalaciones     +
                             querias_cambiar_escuela +
                             estudiar_no_sirve       +
                             baja_autoestima         +
-                            motivo_otro             +
                             trab_est                +
                             ncuartos                +
                             tele                    +
@@ -68,7 +62,7 @@ receta <-   recipe(desertor ~
                             otras_drogas,
                        data = entrena) %>%
   step_dummy(all_nominal_predictors()) %>%
-   step_interact(~ faltaba_dinero:motivo_otro)%>%
+   step_interact(~ faltaba_dinero:baja_autoestima)%>%
   step_zv(all_predictors()) #step_zv  remove variables that contain only a single value.
 ```
 
