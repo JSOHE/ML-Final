@@ -7,10 +7,8 @@ categorización de entradas, transformaciones no lineales):
 
 ```{r}
 receta <-   recipe(desertor ~ 
-                            edo                     +
                             sexo                    +
                             prom_sec                +
-                            sec_publica             +
                             cambio_esc              +
                             asistencia              +
                             reprueba                +
@@ -31,17 +29,12 @@ receta <-   recipe(desertor ~
                             te_casaste              +
                             estudiaran_hermanos     +
                             embarazo                +
-                            querias_cambiar_escuela +
                             estudiar_no_sirve       +
                             baja_autoestima         +
                             trab_est                +
                             ncuartos                +
-                            tele                    +
                             dvd                     +
-                            refri                   +
-                            estufa                  +
                             piso_tierra             +
-                            lavadora                +
                             auto                    +
                             microondas              +
                             computadora             +
@@ -56,10 +49,7 @@ receta <-   recipe(desertor ~
                             confia_esc              +
                             confia_familia          +
                             confia_amigos           +
-                            tabaco                  +
-                            alcohol                 +
-                            marihuana               +
-                            otras_drogas,
+                            alcohol,                 
                        data = entrena) %>%
   step_dummy(all_nominal_predictors()) %>%
    step_interact(~ faltaba_dinero:baja_autoestima)%>%
