@@ -170,7 +170,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="4.0.1" data-path="preprocesamiento-e-ingenieria-de-entradas.html"><a href="preprocesamiento-e-ingenieria-de-entradas.html#preparar-solución"><i class="fa fa-check"></i><b>4.0.1</b> Preparar solución</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="interpretación-del-modelo.html"><a href="interpretación-del-modelo.html"><i class="fa fa-check"></i><b>5</b> Interpretación del Modelo</a></li>
+<li class="chapter" data-level="5" data-path="interpretación-del-modelo.html"><a href="interpretación-del-modelo.html"><i class="fa fa-check"></i><b>5</b> Interpretación del Modelo</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interpretación-del-modelo.html"><a href="interpretación-del-modelo.html#conclusión"><i class="fa fa-check"></i><b>5.1</b> Conclusión</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -198,116 +201,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Obtenemos la diferencia del error de predicción con las variables no permutadas
 A esta diferencia le llamamos importancia de la variable bajo el método de permutaciones.</li>
 </ol>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="interpretación-del-modelo.html#cb130-1" aria-hidden="true" tabindex="-1"></a>pred_iml <span class="ot">&lt;-</span> <span class="cf">function</span>(model, newdata){</span>
-<span id="cb130-2"><a href="interpretación-del-modelo.html#cb130-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">predict</span>(model, <span class="at">new_data =</span> newdata) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(.pred_class)</span>
-<span id="cb130-3"><a href="interpretación-del-modelo.html#cb130-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb130-4"><a href="interpretación-del-modelo.html#cb130-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb130-5"><a href="interpretación-del-modelo.html#cb130-5" aria-hidden="true" tabindex="-1"></a>predictor <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(<span class="at">model =</span> flujo_fit, <span class="at">data =</span> encuesta_test,</span>
-<span id="cb130-6"><a href="interpretación-del-modelo.html#cb130-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> <span class="st">&quot;desertor&quot;</span>, <span class="at">predict.fun =</span> pred_iml)</span></code></pre></div>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="interpretación-del-modelo.html#cb131-1" aria-hidden="true" tabindex="-1"></a>vars_usadas <span class="ot">&lt;-</span> <span class="fu">extract_preprocessor</span>(flujo_fit) <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">&quot;var_info&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb131-2"><a href="interpretación-del-modelo.html#cb131-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(role <span class="sc">==</span> <span class="st">&quot;predictor&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb131-3"><a href="interpretación-del-modelo.html#cb131-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(variable)</span>
-<span id="cb131-4"><a href="interpretación-del-modelo.html#cb131-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-5"><a href="interpretación-del-modelo.html#cb131-5" aria-hidden="true" tabindex="-1"></a>imp_boosting <span class="ot">&lt;-</span> FeatureImp<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">loss =</span> <span class="st">&quot;ce&quot;</span>,  </span>
-<span id="cb131-6"><a href="interpretación-del-modelo.html#cb131-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">compare =</span> <span class="st">&quot;difference&quot;</span>, <span class="at">n.repetitions =</span> <span class="dv">5</span>, <span class="at">features =</span> vars_usadas)</span>
-<span id="cb131-7"><a href="interpretación-del-modelo.html#cb131-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-8"><a href="interpretación-del-modelo.html#cb131-8" aria-hidden="true" tabindex="-1"></a>importancias <span class="ot">&lt;-</span> imp_boosting<span class="sc">$</span>results <span class="sc">%&gt;%</span> </span>
-<span id="cb131-9"><a href="interpretación-del-modelo.html#cb131-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">feature =</span> <span class="fu">fct_reorder</span>(feature, importance))</span>
-<span id="cb131-10"><a href="interpretación-del-modelo.html#cb131-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-11"><a href="interpretación-del-modelo.html#cb131-11" aria-hidden="true" tabindex="-1"></a>grap_importancias <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(importancias, <span class="fu">aes</span>(<span class="at">x =</span> feature, <span class="at">y =</span> importance)) <span class="sc">+</span></span>
-<span id="cb131-12"><a href="interpretación-del-modelo.html#cb131-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">&quot;salmon&quot;</span>) <span class="sc">+</span></span>
-<span id="cb131-13"><a href="interpretación-del-modelo.html#cb131-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()</span>
-<span id="cb131-14"><a href="interpretación-del-modelo.html#cb131-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-15"><a href="interpretación-del-modelo.html#cb131-15" aria-hidden="true" tabindex="-1"></a>importancias</span></code></pre></div>
-<pre><code>##                feature importance.05    importance importance.95
-## 1            prom_bach  0.0232186732  0.0282555283   0.032309582
-## 2           te_casaste  0.0203931204  0.0251842752   0.027518428
-## 3        disg_estudiar  0.0179361179  0.0245700246   0.026535627
-## 4             embarazo  0.0126535627  0.0221130221   0.026044226
-## 5        mejor_trabaja  0.0114250614  0.0214987715   0.023341523
-## 6             prom_sec  0.0170761671  0.0196560197   0.021375921
-## 7         tipo_escuela  0.0104422604  0.0110565111   0.016093366
-## 8               becado  0.0031941032  0.0092137592   0.011302211
-## 9             reprueba  0.0017199017  0.0085995086   0.009705160
-## 10   desertor_hermanos  0.0079852580  0.0085995086   0.011793612
-## 11          asistencia  0.0034398034  0.0067567568   0.010810811
-## 12        discriminado  0.0057739558  0.0067567568   0.008845209
-## 13          cambio_esc  0.0045454545  0.0061425061   0.006142506
-## 14       confia_amigos  0.0007371007  0.0049140049   0.005405405
-## 15      faltaba_dinero  0.0031941032  0.0042997543   0.004914005
-## 16            excusado  0.0001228501  0.0042997543   0.006511057
-## 17            vive_con  0.0033169533  0.0042997543   0.004791155
-## 18         no_entiende  0.0030712531  0.0036855037   0.004914005
-## 19            trab_est  0.0008599509  0.0036855037   0.005528256
-## 20         computadora  0.0027027027  0.0036855037   0.008353808
-## 21 disciplina_estricta -0.0014742015  0.0030712531   0.006388206
-## 22     baja_autoestima  0.0015970516  0.0030712531   0.004299754
-## 23         piso_tierra  0.0013513514  0.0030712531   0.004176904
-## 24     desertor_amigos  0.0014742015  0.0024570025   0.007985258
-## 25             bulling  0.0009828010  0.0024570025   0.004176904
-## 26   estudiar_no_sirve  0.0018427518  0.0024570025   0.005651106
-## 27            ncuartos  0.0008599509  0.0024570025   0.007371007
-## 28                auto  0.0014742015  0.0024570025   0.007493857
-## 29             alcohol -0.0034398034  0.0024570025   0.003931204
-## 30          prob_turno -0.0004914005  0.0018427518   0.004422604
-## 31        prob_familia  0.0007371007  0.0018427518   0.005528256
-## 32          microondas  0.0007371007  0.0018427518   0.002825553
-## 33                agua -0.0006142506  0.0018427518   0.002334152
-## 34             letrina  0.0001228501  0.0018427518   0.003439803
-## 35         cambio_casa  0.0001228501  0.0012285012   0.003685504
-## 36 estudiaran_hermanos  0.0001228501  0.0012285012   0.001228501
-## 37                 dvd -0.0003685504  0.0006142506   0.001719902
-## 38          confia_esc -0.0017199017  0.0006142506   0.004914005
-## 39            internet -0.0009828010  0.0000000000   0.001597052
-## 40               cable -0.0015970516  0.0000000000   0.001105651
-## 41      confia_familia -0.0023341523 -0.0006142506   0.002088452
-## 42                sexo -0.0041769042 -0.0018427518   0.001474201
-## 43            telefono -0.0067567568 -0.0036855037   0.000000000
-##    permutation.error
-## 1          0.1977887
-## 2          0.1947174
-## 3          0.1941032
-## 4          0.1916462
-## 5          0.1910319
-## 6          0.1891892
-## 7          0.1805897
-## 8          0.1787469
-## 9          0.1781327
-## 10         0.1781327
-## 11         0.1762899
-## 12         0.1762899
-## 13         0.1756757
-## 14         0.1744472
-## 15         0.1738329
-## 16         0.1738329
-## 17         0.1738329
-## 18         0.1732187
-## 19         0.1732187
-## 20         0.1732187
-## 21         0.1726044
-## 22         0.1726044
-## 23         0.1726044
-## 24         0.1719902
-## 25         0.1719902
-## 26         0.1719902
-## 27         0.1719902
-## 28         0.1719902
-## 29         0.1719902
-## 30         0.1713759
-## 31         0.1713759
-## 32         0.1713759
-## 33         0.1713759
-## 34         0.1713759
-## 35         0.1707617
-## 36         0.1707617
-## 37         0.1701474
-## 38         0.1701474
-## 39         0.1695332
-## 40         0.1695332
-## 41         0.1689189
-## 42         0.1676904
-## 43         0.1658477</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="interpretación-del-modelo.html#cb126-1" aria-hidden="true" tabindex="-1"></a>pred_iml <span class="ot">&lt;-</span> <span class="cf">function</span>(model, newdata){</span>
+<span id="cb126-2"><a href="interpretación-del-modelo.html#cb126-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">predict</span>(model, <span class="at">new_data =</span> newdata) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(.pred_class)</span>
+<span id="cb126-3"><a href="interpretación-del-modelo.html#cb126-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb126-4"><a href="interpretación-del-modelo.html#cb126-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-5"><a href="interpretación-del-modelo.html#cb126-5" aria-hidden="true" tabindex="-1"></a>predictor <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(<span class="at">model =</span> flujo_fit, <span class="at">data =</span> encuesta_test,</span>
+<span id="cb126-6"><a href="interpretación-del-modelo.html#cb126-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> <span class="st">&quot;desertor&quot;</span>, <span class="at">predict.fun =</span> pred_iml)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="interpretación-del-modelo.html#cb127-1" aria-hidden="true" tabindex="-1"></a>vars_usadas <span class="ot">&lt;-</span> <span class="fu">extract_preprocessor</span>(flujo_fit) <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">&quot;var_info&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb127-2"><a href="interpretación-del-modelo.html#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(role <span class="sc">==</span> <span class="st">&quot;predictor&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb127-3"><a href="interpretación-del-modelo.html#cb127-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(variable)</span>
+<span id="cb127-4"><a href="interpretación-del-modelo.html#cb127-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-5"><a href="interpretación-del-modelo.html#cb127-5" aria-hidden="true" tabindex="-1"></a>imp_boosting <span class="ot">&lt;-</span> FeatureImp<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">loss =</span> <span class="st">&quot;ce&quot;</span>,  </span>
+<span id="cb127-6"><a href="interpretación-del-modelo.html#cb127-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">compare =</span> <span class="st">&quot;difference&quot;</span>, <span class="at">n.repetitions =</span> <span class="dv">5</span>, <span class="at">features =</span> vars_usadas)</span>
+<span id="cb127-7"><a href="interpretación-del-modelo.html#cb127-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-8"><a href="interpretación-del-modelo.html#cb127-8" aria-hidden="true" tabindex="-1"></a>importancias <span class="ot">&lt;-</span> imp_boosting<span class="sc">$</span>results <span class="sc">%&gt;%</span> </span>
+<span id="cb127-9"><a href="interpretación-del-modelo.html#cb127-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">feature =</span> <span class="fu">fct_reorder</span>(feature, importance))</span>
+<span id="cb127-10"><a href="interpretación-del-modelo.html#cb127-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-11"><a href="interpretación-del-modelo.html#cb127-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(importancias, <span class="fu">aes</span>(<span class="at">x =</span> feature, <span class="at">y =</span> importance)) <span class="sc">+</span></span>
+<span id="cb127-12"><a href="interpretación-del-modelo.html#cb127-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">&quot;salmon&quot;</span>) <span class="sc">+</span></span>
+<span id="cb127-13"><a href="interpretación-del-modelo.html#cb127-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="1080" /></p>
+<div id="conclusión" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Conclusión</h2>
+<p>Podemos observar que el modelo es bueno para predecir la deserción escolar, teniendo una pérdida logarítmicade <span class="math inline">\(0.3890\)</span> y una curva ROC de <span class="math inline">\(.9035\)</span>, adicionalmente podemos observar la importancia de las varaibles, la cual es la siguiente.</p>
+<ul>
+<li>Promedio bachillerato</li>
+<li>Embarazo</li>
+<li>Le disgusta estudiar</li>
+<li>Se casó</li>
+<li>Mejor trabaja</li>
+<li>Tipo de escuela</li>
+<li>prom_secundaria</li>
+<li>número de cuartos en suc casa.</li>
+<li>asitencia al bachillerato</li>
+<li>faltaba dinero</li>
+</ul>
 
+</div>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr />

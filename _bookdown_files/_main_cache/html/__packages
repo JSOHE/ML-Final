@@ -37,6 +37,7 @@ nnet
 withr
 tidyselect
 cli
+labeling
 bookdown
 sass
 checkmate
@@ -47,9 +48,11 @@ pkgconfig
 htmltools
 parallelly
 lhs
+highr
 fastmap
 rlang
 rstudioapi
+farver
 jquerylib
 generics
 jsonlite
