@@ -1,2 +1,44 @@
 # Interpretación del Modelo
 
+
+Como se menciona en las notas del curso, [Clase 15 Interpretación de modelos](https://aprendizaje-maquina-2021-mcd.netlify.app/interpretaci%C3%B3n-de-modelos.html),  buscamos responder ¿Cuánto contribuye cada variable al desempeño predictivo del modelo?. Para dar respuesta a esta pregunta se recurre a la idea de importancia basadas en permutaciones. En la cual  se realiza el ajuste del modelo con un conjunto de entrenamiento y se toma un conjunto de datos de validación. En cada variable del modelo se realiza lo siguiente: 
+
+1. Permutamos la variable en el conjunto de validación
+2. Hacemos predicciones con nuestro predictor
+3. Evaluamos el error de predicción
+4. Obtenemos la diferencia del error de predicción con las variables no permutadas
+A esta diferencia le llamamos importancia de la variable bajo el método de permutaciones.
+
+
+```{r}
+
+
+pred_iml <- function(model, newdata){
+   predict(model, new_data = newdata) %>% pull(.pred_class)
+}
+
+predictor <- Predictor$new(model = flujo_fit, data = encuesta_test,
+                           y = "desertor", predict.fun = pred_iml)
+
+
+```
+
+```{r, fig.width =6, fig.height= 8}
+vars_usadas <- extract_preprocessor(flujo_fit) %>% pluck("var_info") %>%
+  filter(role == "predictor") %>%
+  pull(variable)
+
+imp_boosting <- FeatureImp$new(predictor, loss = "ce",  
+                             compare = "difference", n.repetitions = 5, features = vars_usadas)
+
+importancias <- imp_boosting$results %>% 
+    mutate(feature = fct_reorder(feature, importance))
+
+ggplot(importancias, aes(x = feature, y = importance)) +
+    geom_hline(yintercept = 0, colour = "salmon") +
+    geom_point() + coord_flip()
+
+
+```
+
+
