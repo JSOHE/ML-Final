@@ -62,11 +62,11 @@ skim(entrena)
 ##  Variables claramente importantes (hipótesis):
 
 
-edo: en el que vive                    
-sexo: hombre, mujer                   
-prom_sec: promedio secundaria               
-sec_publica: la secundaria a la que asistio fue publica o no            
-cambio_esc: Cuantas veces se cambió de secundaria         asistencia: Qué tanto asistía a la escuela             
+edo               
+sexo                 
+prom_sec            
+sec_publica          
+cambio_esc:      asistencia: Qué tanto asistía a la escuela             
 reprueba: Qué tanto reprobaba en el bachillerato          prom_bach: Cuál fue su promedio en bachillerato           becado: Si estaba becado en el bachillerato                
 desertor_amigos: Si tenia amigos que desertaron.       
 desertor_hermanos: Si sus hermanos desertaron     
@@ -264,7 +264,7 @@ De estas las que están más fuertemente relacionadas con la deserción son:
 * le disgusta estudiar($68\%$)
 * mejor prefiere trabajar($72\%$)
 * te casaste ($77\%$)
-* emnarazo ($76\%$)
+* embarazo ($76\%$)
 * estudiar no sirve ($72\%$)
 * baja autoestima ($64\%$)
 * discriminado ($58\%$)
