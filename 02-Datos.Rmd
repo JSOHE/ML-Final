@@ -62,7 +62,7 @@ encuesta <- rename(encuesta,
        disciplina_estricta     =  p24_11,   
        discriminado            =  p24_12,    
        prob_familia            =  p24_13,   
-       te_casate               =  p24_14,    
+       te_casaste               =  p24_14,    
        estudiaran_hermanos     =  p24_15,   
        inseguridad             =  p24_16,    
        fallecio_familiar       =  p24_17,   
@@ -108,6 +108,6 @@ Después de una segunda revisión se decidieron quitar las siguientes variables:
 
 ```{r}
 encuesta <- encuesta %>% 
-  select(-p15,-baja_reprueba, -indisciplina, -id)
+  select(-p15,-baja_reprueba, -indisciplina, -id, -motivo_otro)
 ```
 

@@ -72,27 +72,21 @@ desertor_amigos: Si tenia amigos que desertaron.
 desertor_hermanos: Si sus hermanos desertaron     
 faltaba_dinero         
 prob_turno             
-baja_reprueba          
 disg_estudiar          
 indisciplina           
 mejor_trabaja          
 no_entiende            
-esc_lejos              
 cambio_casa            
 bulling                
 disciplina_estricta    
 discriminado           
 prob_familia           
-te_casate              
+te_casaste              
 estudiaran_hermanos    
-inseguridad            
-fallecio_familiar      
 embarazo               
-malas_instalaciones    
 querias_cambiar_escuela
 estudiar_no_sirve      
 baja_autoestima        
-motivo_otro            
 trab_est               
 ncuartos               
 tele                   
@@ -110,8 +104,6 @@ internet
 excusado               
 letrina                
 cable                  
-id                     
-desertor               
 tipo_escuela           
 vive_con               
 confia_esc             
@@ -213,8 +205,7 @@ Si reprobaste aunque sea una materia tienes el $50\%$ de posibilidades de desert
 tabla_univariada(entrena, reprueba, desertor) %>% 
   ggplot(aes(reprueba, pcn, fill = desertor)) + 
   geom_col(position = "dodge") +  ggtitle("¿Reprobaste alguna materia?") +
-  scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 2), 
-                     labels = function(x) stringr::str_wrap(x, width = 20)) + xlab("")
+ xlab("")
 ```
             
 
@@ -267,8 +258,18 @@ bulling                disciplina_estricta      discriminado
 prob_familia           te_casate                estudiaran_hermanos    
 inseguridad            fallecio_familiar        embarazo               
 malas_instalaciones    querias_cambiar_escuela  estudiar_no_sirve      
-baja_autoestima        motivo_otro     
+baja_autoestima      
 
+De estas las que están más fuertemente relacionadas con la deserción son:
+* le disgusta estudiar($68\%$)
+* mejor prefiere trabajar($72\%$)
+* te casaste ($77\%$)
+* emnarazo ($76\%$)
+* estudiar no sirve ($72\%$)
+* baja autoestima ($64\%$)
+* discriminado ($58\%$)
+* problemas en la familia ($58\%$)
+* estudiaran hermanos ($59\%$)
 
 
 ```{r}
@@ -293,49 +294,128 @@ tabla_univariada(entrena, malas_instalaciones, desertor)
 tabla_univariada(entrena, querias_cambiar_escuela, desertor)
 tabla_univariada(entrena,estudiar_no_sirve, desertor)
 tabla_univariada(entrena, baja_autoestima, desertor)
-tabla_univariada(entrena, motivo_otro, desertor)
+
 
 ```
 
-    
+### ¿Trabajaba mientras estudiaba?
 
-
-#### ¿Con quien vives? (P12_1:P12_10)
+Mo parece ser una variable relevante
 
 ```{r}
-tabla_univariada(entrena, p12_1, desertor) %>%
-  ggplot(aes(p12_1, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") + ggtitle("¿Vives solo?")
-
+tabla_univariada(entrena, trab_est , desertor) %>% 
+  ggplot(aes(trab_est , pcn, fill = desertor)) + 
+  geom_col(position = "dodge") +  ggtitle("¿Trabaja mientras estudia?") +
+ xlab("")
 ```
+
+
+#### ¿Cuántos cuartos tiene tu casa?
+
+Al aumentar el número de cuartos aumenta la probabilidad de terminar el bachillerato.
+
+```{r}
+tabla_univariada(entrena, ncuartos, desertor) %>% ggplot(aes(factor(ncuartos), pcn, fill = desertor)) + geom_col(position = "dodge") + ggtitle("¿Cuántos cuartos tiene su casa?") +
+ xlab("")
+
+tabla_univariada(entrena, ncuartos, desertor) %>% ggplot(aes(ncuartos, fill = desertor)) + geom_boxplot() + ggtitle("¿Cuántos cuartos tiene su casa?") +
+ xlab("")
+```
+
+### ¿En su casa cuenta con lo siguiente?
+
+```{r}
+tabla_univariada(entrena, tele, desertor)
+tabla_univariada(entrena, dvd, desertor)
+tabla_univariada(entrena, refri, desertor)
+tabla_univariada(entrena, estufa, desertor)
+tabla_univariada(entrena, piso_tierra, desertor)
+tabla_univariada(entrena, lavadora, desertor)
+tabla_univariada(entrena, auto, desertor)
+tabla_univariada(entrena, microondas, desertor)
+tabla_univariada(entrena, computadora, desertor)
+tabla_univariada(entrena, agua, desertor)
+tabla_univariada(entrena, telefono, desertor)
+tabla_univariada(entrena, internet, desertor)
+tabla_univariada(entrena, excusado, desertor)
+tabla_univariada(entrena, letrina, desertor)
+tabla_univariada(entrena, cable, desertor)
+```
+           
+### ¿En qué tipo de prepa estudiaste  la preparatoria?
+
 
 ```{r}
 
-tabla_univariada(entrena, p12_8, desertor)  %>%
-  ggplot(aes(p12_8, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") +  ggtitle("¿Vives con tus hijos?")
-
-tabla_univariada(entrena, p12_9, desertor)  %>%
-  ggplot(aes(p12_9, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") +  ggtitle("¿Vives con esposo(a) o pareja?")
+tabla_univariada(entrena, tipo_escuela, desertor) %>% 
+  ggplot(aes(tipo_escuela, pcn, fill = desertor)) + 
+  geom_col(position = "stack") +  ggtitle("¿En qué tipo de escuela estudiaste la prepa") +
+ xlab("") +   theme(axis.text.x = element_text(angle = 90))
 ```
-##### ¿Si eres mujer y vives con tus hijo es lo mismo que si eres hombre?
+
+            
+
+#### ¿Con quien vives? 
+
+No parece ser una varaible relevante, ya que los porcentajes de desrción se ven muy similares en todos los casos
 
 ```{r}
-entrena %>% select(sexo, p12_9, desertor) %>% 
-  filter(sexo == " Mujer") %>% group_by(p12_9, desertor) %>% tally() %>% mutate(pcn = round(n/sum(n),2)) %>%
-  ggplot(aes(p12_9, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") +  ggtitle("Mujer: ¿Vives con tus hijos?")
+tabla_univariada(entrena, vive_con, desertor) %>%
+  ggplot(aes(vive_con, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("¿Con quien vives")
+
 ```
+
+
+### ¿Si tiene problemas en el bachillerato confiaba en la escuela, la familia o los amigos?          
+
+Realmente la probabilidad de desertar aumenta si no confias en al escuela o la familia.
 
 ```{r}
-entrena %>% select(sexo, p12_9, desertor) %>% 
-  filter(sexo == " Hombre") %>% group_by(p12_9, desertor) %>% tally() %>% mutate(pcn = round(n/sum(n),2)) %>%
-  ggplot(aes(p12_9, pcn, fill = desertor)) + 
-  geom_col(position = "dodge") +  ggtitle("Hombre: ¿Vives con tus hijos?")
+tabla_univariada(entrena, confia_esc, desertor) %>%
+  ggplot(aes(confia_esc, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("¿confias en la escuela?")
+
+tabla_univariada(entrena, confia_familia, desertor) %>%
+  ggplot(aes(confia_familia, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("¿confias en la familia?")
+
+tabla_univariada(entrena, confia_amigos, desertor) %>%
+  ggplot(aes(confia_amigos, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("¿confias en los amigos?")
 ```
 
 
+  
+
+
+### ¿Consumes alguan de las siguientes sustancias?
+
+tabaco                 
+alcohol                
+marihuana              
+otras_drogas  
+
+```{r}
+tabla_univariada(entrena, tabaco, desertor) %>%
+  ggplot(aes(tabaco, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("¿Consumes tabaco?")
+
+
+tabla_univariada(entrena, alcohol, desertor) %>%
+  ggplot(aes(alcohol, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("¿Consumes alcohol?")
+
+tabla_univariada(entrena, marihuana, desertor) %>%
+  ggplot(aes(marihuana, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("¿Consumes marihuana?")
+
+tabla_univariada(entrena, otras_drogas, desertor) %>%
+  ggplot(aes(otras_drogas, pcn, fill = desertor)) + 
+  geom_col(position = "dodge") + ggtitle("¿otras drogas?")
+
+
+```
 
 
 
