@@ -38,7 +38,7 @@ ggplot(importancias, aes(x = feature, y = importance)) +
     geom_hline(yintercept = 0, colour = "salmon") +
     geom_point() + coord_flip()
 
-
+importancias
 ```
 
 
