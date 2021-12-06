@@ -10,7 +10,7 @@ Deserción escolar
 Es decir, para cuantificar la deserción, se deberá contabilizar a los individuos que ya una vez inscritos en algún grado escolar, abandonan los estudios parcial o completamente.  ^[Lineamientos para la elaboración de indicadores educativos]
 
 
-De esta manera la Deserción escolas total se puede calcular como la suma de la deserción intercurricular y la deserción intracurricular. 
+De esta manera la Deserción escolar total se puede calcular como la suma de la deserción intercurricular y la deserción intracurricular. 
 
 * La deserción intracurricular se refiere al abandono escolar que se presenta en el interior de un ciclo escolar; es decir, mientras el programa de estudios se está desarrollando. En esta vertiente, el alumno no concluye el ciclo escolar al que se inscribió.
 

@@ -1,6 +1,6 @@
 ---
 title: "Modelo Predictivo de la Deserción en la Educación Media Superior"
-author: "Valeria & Juan Carlos"
+author: "Valeria Serrano Cote & Juan Carlos Soto Hernández"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -32,6 +32,7 @@ library(ggplot2)
 library(tidymodels)
 library(skimr)
 library(xgboost)
+library(iml)
 
 ```
 
@@ -42,10 +43,15 @@ library(xgboost)
 >
 > --- Jared Diamond
 
-Este documento tiene la finalidad utilizar **aprendizaje de máquina** para identificar y predecir la frecuencia de factores que condicionan la deserción en la educación media. Toma como eje el trabajo publicado en 2012, denominado "Reporte de la Encuesta Nacional de Deserción en la Educación Media Superior" el cual es la única encuesta en este país para intertar entender cuál es la razón de la deserción escolar.
+Este documento tiene la finalidad utilizar **aprendizaje de máquina** para identificar y predecir la frecuencia de factores que condicionan la deserción en la educación media. Toma como eje el trabajo publicado en 2012, denominado "Reporte de la Encuesta Nacional de Deserción en la Educación Media Superior" **(ENDEMS)** el cual es la única encuesta en este país para intertar entender cuál es la razón de la deserción escolar.
 
 
 Consiste en 13,014 entrevistas realizadas a 6,472 mujeres y 6,542 hombres, de estas entrevistas 4,770 jóvenes nunca se matricularon en el nivel medio superior y 2,549 desertaron; el resto, 5,686 continúan estudiando o concluyeron este nivel.
+
+Los siguientes son datos generales de la encuesta, sin embargo para el trabajo final se **modificaron las variables** por lo que el número de encuestas que se utilizaron resultó menor. 
+
+
+## Datos Generales de la Encuesta Nacional de Deserción en la Educación Media Superior
 
 **Cobertura geográfica.**
 
@@ -75,9 +81,9 @@ Existen una población de interés y 3 subpoblaciones.
 
 El tamaño de muestra se fijó en 2,000 desertores, para lo cual se estimó necesario visitar 44,000 viviendas. De esta forma, se aprovechó también el número de visitas para recabar informacíon de jóvenes que nunca se inscribieron a la Educación Media Superior, ya sea porque seguían estudiando la secundaria, porque desertaron del sistema educativo mientras estudiaban la Educación Básica o porque concluyeron ese nivel y no transitaron al siguiente.
 
-El esquema de muestreo fue **probabilista**, **estratificado**, por **conglomerados** y **polietáptico**. La población objetivo de la ENDEMS estuvo compuesta por jóvenes, hombres y mujeres, de entre 14 y 25 años de edad que residían permanentemente en viviendas particulares ubicadas en localidades con más de 500 habitantes dentro del territorio nacional.
+El esquema de muestreo fue **probabilista**, **estratificado**, por **conglomerados** y **polietáptico**. La población objetivo de la **ENDEMS** estuvo compuesta por jóvenes, hombres y mujeres, de entre 14 y 25 años de edad que residían permanentemente en viviendas particulares ubicadas en localidades con más de 500 habitantes dentro del territorio nacional.
 
-La ENDEMS es la primera encuesta que se levanta en México específicamente sobre deserción en la Educación Media Superior y que es representativa a nivel nacional. 
+La **ENDEMS** es la primera encuesta que se levanta en México específicamente sobre deserción en la Educación Media Superior y que es representativa a nivel nacional. 
 
 
 

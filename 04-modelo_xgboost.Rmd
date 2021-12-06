@@ -134,8 +134,8 @@ mis_metricas(preds_prueba_sol, truth = factor(desertor), .estimate = .pred_deser
 
 **Resultados**:
 
-1. Esto modelo logra un score de **$0.125$**
-2. Una curva ROC de **$0.984$**.
+1. Esto modelo logra un score de $0.3935$
+2. Una curva ROC de $.900$
 
 
 ```{r}

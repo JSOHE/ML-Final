@@ -1,11 +1,13 @@
 tab:unnamed-chunk-7
+datos-generales-de-la-encuesta-nacional-de-deserción-en-la-educación-media-superior
 introducción
-carga-de-datos
+datos-ocupados-de-la-endems
 renombrar-las-variables.
 estadísticos-descriptivos-del-abandono-escolar
 limpieza-exploración-y-análisis-conceptual
 resumen-general
 variables-claramente-importantes-hipótesis
+variables-que-se-eliminarán-del-modelo
 influye-la-entidad-federativa-en-al-que-vive
 el-género-influye
 promedio-secundaria

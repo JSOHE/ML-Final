@@ -62,12 +62,18 @@ skim(entrena)
 ##  Variables claramente importantes (hipótesis):
 
 
-edo               
 sexo                 
-prom_sec            
-sec_publica          
-cambio_esc:      asistencia: Qué tanto asistía a la escuela             
-reprueba: Qué tanto reprobaba en el bachillerato          prom_bach: Cuál fue su promedio en bachillerato           becado: Si estaba becado en el bachillerato                
+prom_sec  
+
+
+##  Variables que se eliminarán del modelo:
+edo               
+sec_publica  
+
+          
+        
+cambio_esc:      asistencia:          
+reprueba:        prom_bach: Cuál fue su promedio en bachillerato           becado: Si estaba becado en el bachillerato                
 desertor_amigos: Si tenia amigos que desertaron.       
 desertor_hermanos: Si sus hermanos desertaron     
 faltaba_dinero         

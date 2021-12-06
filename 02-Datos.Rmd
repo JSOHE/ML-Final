@@ -1,27 +1,33 @@
-# Carga de Datos
+# Datos ocupados de la ENDEMS 
 
 ---
 
-Este apartado carga los datos y examina los principales estadísticos que se presentaron en la encuesta.
+Este apartado carga los datos y examina las principales variables, además recodifica tanto las clases de las diferentes columnas qeu componen el set de datos y otorga las diferentes categorías a las variables
 
-Lo primero que se tuvo que hacer fue modificar la encuesta ya que su unidad básica era el hogar, por ello se tuvieron que trabajar los datos para colocarlos por población objetivo, es decir aquelos jóvenes entre 14 y 21 años que habìna deseratdo de la educación media superior.
+Lo primero que se tuvo que hacer fue modificar la encuesta ya que su unidad básica era el hogar, por ello se tuvieron que trabajar los datos para colocarlos por población objetivo, es decir aquelos jóvenes entre $18$ y $25$ años que habían  o no deseratado  de la educación media superior.
 
-Al hacer esto nos encotramos con una base de **12,317** adolescentes que fueron entrevistados (diferentes a las 13,014 viviendas en las que se habia aplicado la encuesta)
+Este punto es relevante porque lo que se quiere es predecir qué jóvenes **dejarán de estudiar antes de concluir el bachillerato**. Los jóvenes entre 14 y 17 años que están estudiando el bachillerato al momento de la encuesta, no puden catalogarse como *no desertores*, ya que si bien es cierto que al momento de la encuesta están asistiendo  a la preparatoria, eso no quiere decir que al siguiente año vayan a continuar estudiando.
+
+> Es por ello que solo se tomaron en cuentas a aquellos individuos que tuvieran entre 18 y 25 años, así como aquellos que desertaron antes de los 17 años.
+
+Al hacer esto nos encotramos con una base de $8,136$ adolescentes que fueron entrevistados (diferentes a las 13,014 viviendas en las que se había aplicado la encuesta)
 
 ```{r}
 
 #encuesta <- read_dta("./Data/basefinal.dta") 
-#
+
 #source("recodifica.R")
 
 #saveRDS(encuesta, "./Data/encuesta.rds")
 
 encuesta <- readRDS("./Data/encuesta.rds")
+
+encuesta %>% nrow
 ```
 
-Una vez cargada la encuesta, encontramos que no estaba codificada por ello, tomamos todos los datos y construimos los factores, haciendo más manejable la encuesta, cabe señalar que esta parte del trabajo tomó mucho tiempo ya que se codificaron las variables a factores.
+Una vez cargada la encuesta, encontramos que no estaba codificada por ello, tomamos todos los datos y construimos los factores, haciendo más manejable la encuesta, cabe señalar que esta parte del trabajo tomó mucho tiempo ya que se codificaron las variables.
 
-La siguiente es una base filtrada con todos los jóvenes que se entrevistaron y tienen entre 18 y 24 años, edad en la que ya deberían haber terminado la educación media superior.
+La siguiente es una base filtrada con todos los jóvenes que se entrevistaron y tienen entre 18 y 25 años, edad en la que ya deberían haber terminado la educación media superior, así como aquellos que desertaron con menos de 17 años.
 
 ```{r}
 head(encuesta,4) 
@@ -111,3 +117,4 @@ encuesta <- encuesta %>%
   select(-p15,-baja_reprueba, -indisciplina, -id, -motivo_otro)
 ```
 
+Estas variables estaban relacionadas con la variable deserción, por ejemplo la pregunta p15, trataba sobre con cuál promedio de bachillerato te habías dado de baja, así mismo id era solo un indicador que diferiaba a un alumno de otro.
