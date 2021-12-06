@@ -52,7 +52,6 @@ receta <-   recipe(desertor ~
                             alcohol,                 
                        data = entrena) %>%
   step_dummy(all_nominal_predictors()) %>%
-   step_interact(~ faltaba_dinero:baja_autoestima)%>%
   step_zv(all_predictors()) #step_zv  remove variables that contain only a single value.
 ```
 
@@ -67,8 +66,8 @@ prep(receta, entrena) %>% juice() %>% dim()
 Empezamos con parámetros más o menos default
 
 ```{r}
-modelo_boosting <- boost_tree(learn_rate = 0.1, trees = 3000, 
-                              mtry = 5, tree_depth = 3, sample_size = 0.8) %>%
+modelo_boosting <- boost_tree(learn_rate = 0.01, trees = 3000, 
+                              mtry = 5, tree_depth = 7, sample_size = 0.8) %>%
   set_mode("classification") %>% 
   set_args(objective = "binary:logistic")
 flujo <- workflow() %>% add_recipe(receta) %>% add_model(modelo_boosting)
@@ -134,8 +133,8 @@ mis_metricas(preds_prueba_sol, truth = factor(desertor), .estimate = .pred_deser
 
 **Resultados**:
 
-1. Esto modelo logra un score de $0.3935$
-2. Una curva ROC de $.900$
+1. Esto modelo logra un score de $0.4414$
+2. Una curva ROC de $.9021$
 
 
 ```{r}
