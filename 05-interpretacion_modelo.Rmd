@@ -34,11 +34,14 @@ imp_boosting <- FeatureImp$new(predictor, loss = "ce",
 importancias <- imp_boosting$results %>% 
     mutate(feature = fct_reorder(feature, importance))
 
-ggplot(importancias, aes(x = feature, y = importance)) +
+grap_importancias <- ggplot(importancias, aes(x = feature, y = importance)) +
     geom_hline(yintercept = 0, colour = "salmon") +
     geom_point() + coord_flip()
 
 importancias
 ```
 
+## Conclusión
+
+Podemos observar que el modelo es bueno para predecir la deserción escolar, teniendo una pérdida losarítmica
 

@@ -61,62 +61,30 @@ skim(entrena)
 
 ##  Variables claramente importantes (hipótesis):
 
-
-sexo                 
-prom_sec  
-
+sexo                  prom_sec              cambio_esc            asistencia            
+reprueba              prom_bach             becado                desertor_amigos       
+desertor_hermanos     faltaba_dinero        prob_turno            disg_estudiar         
+mejor_trabaja         no_entiende           cambio_casa           bulling               
+disciplina_estricta   discriminado          prob_familia          te_casaste            
+estudiaran_hermanos   embarazo              estudiar_no_sirve     baja_autoestima       
+trab_est              ncuartos              dvd                   piso_tierra           
+auto                  microondas            computadora           agua                  
+telefono              internet              excusado              letrina               
+cable                 tipo_escuela          vive_con              confia_esc            
+confia_familia        confia_amigos         alcohol
 
 ##  Variables que se eliminarán del modelo:
 edo               
 sec_publica  
-
-          
-        
-cambio_esc:      asistencia:          
-reprueba:        prom_bach: Cuál fue su promedio en bachillerato           becado: Si estaba becado en el bachillerato                
-desertor_amigos: Si tenia amigos que desertaron.       
-desertor_hermanos: Si sus hermanos desertaron     
-faltaba_dinero         
-prob_turno             
-disg_estudiar          
-indisciplina           
-mejor_trabaja          
-no_entiende            
-cambio_casa            
-bulling                
-disciplina_estricta    
-discriminado           
-prob_familia           
-te_casaste              
-estudiaran_hermanos    
-embarazo               
 querias_cambiar_escuela
-estudiar_no_sirve      
-baja_autoestima        
-trab_est               
-ncuartos               
 tele                   
-dvd                    
 refri                  
 estufa                 
-piso_tierra            
 lavadora               
-auto                   
-microondas             
-computadora            
-agua                   
-telefono               
-internet               
-excusado               
-letrina                
-cable                  
-tipo_escuela           
-vive_con               
 confia_esc             
 confia_familia         
 confia_amigos          
 tabaco                 
-alcohol                
 marihuana              
 otras_drogas   
 
@@ -126,6 +94,8 @@ otras_drogas
 ### ¿Influye la entidad federativa en al que vive?
 
 Podemos observar que etadoe como Ags, BC e Hgo, Tamps, Gro, Q. Roo, Yuc y Zac tienen porcentaje de deserción mayor al 53%. Siendo Ags la entidad com mayor deserción del país.
+
+Eliminamos entidad deferativa porque la encuesta solo es representativa a nivel país.
 
 ```{r}
 tabla_univariada(entrena, edo, desertor) %>%   
@@ -145,7 +115,9 @@ Incluso pensaría que el porcentaje de mujeres que sería superior pero los dato
 ```{r}
 entrena %>% select(sexo, desertor) %>% 
   group_by(sexo, desertor) %>% 
-  tally() %>% mutate(pcn = round(n/sum(n),2))
+  tally() %>% mutate(pcn = round(n/sum(n),2)) %>% 
+  ggplot(aes(sexo, pcn, fill= desertor)) +  geom_col(position = "dodge") +
+  ggtitle("Desertores por sexo")
 
 ```                   
 
@@ -282,7 +254,7 @@ De estas las que están más fuertemente relacionadas con la deserción son:
 
 tabla_univariada(entrena, faltaba_dinero, desertor)
 tabla_univariada(entrena, prob_turno, desertor)
-tabla_univariada(entrena, disg_estudiar, desertor)
+
 tabla_univariada(entrena, mejor_trabaja, desertor)
 tabla_univariada(entrena, no_entiende, desertor)
 tabla_univariada(entrena, esc_lejos, desertor)
@@ -291,16 +263,21 @@ tabla_univariada(entrena, bulling, desertor)
 tabla_univariada(entrena, disciplina_estricta, desertor)
 tabla_univariada(entrena, discriminado, desertor)
 tabla_univariada(entrena, prob_familia, desertor)
-tabla_univariada(entrena, te_casaste, desertor)
+
 tabla_univariada(entrena, estudiaran_hermanos, desertor)
 tabla_univariada(entrena, inseguridad, desertor)
 tabla_univariada(entrena, fallecio_familiar, desertor)
-tabla_univariada(entrena, embarazo, desertor)
+
 tabla_univariada(entrena, malas_instalaciones, desertor)
 tabla_univariada(entrena, querias_cambiar_escuela, desertor)
 tabla_univariada(entrena,estudiar_no_sirve, desertor)
 tabla_univariada(entrena, baja_autoestima, desertor)
 
+tabla_univariada(entrena, te_casaste, desertor) %>% ggplot(aes(te_casaste, pcn, fill = desertor)) + geom_col(position ="dodge") + ggtitle("Te casate")
+
+tabla_univariada(entrena, embarazo, desertor) %>% ggplot(aes(embarazo, pcn, fill = desertor)) + geom_col(position ="dodge") +  ggtitle("Te embarazaste")
+
+tabla_univariada(entrena, disg_estudiar, desertor) %>% ggplot(aes(disg_estudiar, pcn, fill = desertor)) + geom_col(position ="dodge") +  ggtitle("Te disgusta estudiar")
 
 ```
 
