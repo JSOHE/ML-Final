@@ -52,12 +52,7 @@ tabla_univariada <- function(datos, variable, target){
 
 ## Resumen general
 
-```{r}
-library(skimr)
 
-skim(entrena)
-
-```
 
 ##  Variables claramente importantes (hipótesis):
 
