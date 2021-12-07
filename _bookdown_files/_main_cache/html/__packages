@@ -20,12 +20,11 @@ tune
 workflows
 workflowsets
 yardstick
-skimr
+tinytex
 xgboost
 iml
 lubridate
 DiceDesign
-repr
 backports
 bslib
 utf8
@@ -43,7 +42,6 @@ sass
 checkmate
 digest
 rmarkdown
-base64enc
 pkgconfig
 htmltools
 parallelly

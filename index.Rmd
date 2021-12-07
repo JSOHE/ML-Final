@@ -4,9 +4,7 @@ author: "Valeria Serrano Cote & Juan Carlos Soto Hernández"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-output:
-  bookdown::gitbook: default
-  #bookdown::html_book
+output: html_document
 ---
 
 
@@ -30,7 +28,7 @@ library(haven)
 library(stringr)
 library(ggplot2)
 library(tidymodels)
-library(skimr)
+library(tinytex)
 library(xgboost)
 library(iml)
 
